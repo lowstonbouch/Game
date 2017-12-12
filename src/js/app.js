@@ -231,13 +231,13 @@ let game = {
     }
   
   
-    if(game.input.activePointer.isDown && hookTimer === true){
+    if(game.input.activePointer.leftButton.isDown && hookTimer === true){
       // click(player.x, player.y,  cursor.x,  cursor.y);
       // hookTimer = false;
       pushHook(player.x, player.y,  cursor.x,  cursor.y);
     }
   
-    if(game.input.activePointer.isUp && hookTimer === false){
+    if(game.input.activePointer.leftButton.isUp && hookTimer === false){
       hookTimer = true;
     }
   
