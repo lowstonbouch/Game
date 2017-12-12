@@ -8,7 +8,8 @@ module.exports = {
     entry: path.join(__dirname, 'src/js/main.js'),
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'game.js'
+        filename: 'game.js',
+        publicPath: 'src',
     },
     resolve: {
         extensions: ['.ts', '.js'],
