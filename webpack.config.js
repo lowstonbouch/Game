@@ -7,7 +7,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: path.join(__dirname, 'src/js/main.js'),
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: __dirname,
         filename: 'game.js'
     },
     resolve: {
