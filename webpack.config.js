@@ -16,7 +16,7 @@ module.exports = {
             pixi: path.join(__dirname, 'node_modules/phaser-ce/build/custom/pixi.js'),
             phaser: path.join(__dirname, 'node_modules/phaser-ce/build/custom/phaser-split.js'),
             p2: path.join(__dirname, 'node_modules/phaser-ce/build/custom/p2.js'),
-            assets: path.join(__dirname, 'assets/')
+            // assets: path.join(__dirname, 'assets/')
         }
     },
     plugins: [
@@ -44,14 +44,16 @@ module.exports = {
     module: {
         rules: [
             { test: /\.ts$/, enforce: 'pre', loader: 'tslint-loader' },
-            { test: /assets(\/|\\)/, loader: 'file-loader?name=assets/[hash].[ext]' },
+            // { test: /assets(\/|\\)/, loader: 'file-loader?name=assets/[hash].[ext]' },
+            // { test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/ },
             { test: /pixi\.js$/, loader: 'expose-loader?PIXI' },
             { test: /phaser-split\.js$/, loader: 'expose-loader?Phaser' },
             { test: /p2\.js$/, loader: 'expose-loader?p2' },
             { test: /\.ts$/, loader: 'ts-loader', exclude: '/node_modules/' },
             { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-            { test: /\.(png|svg|jpg|gif|mp3|wav)$/, loader: 'file-loader' },
+            { test: /\.(png|svg|jpg|gif|mp3|wav)$/, loader: 'file-loader?name=[name].[ext]' },
         ]
     },
     devtool: 'source-map'
 };
+
