@@ -114,10 +114,10 @@ let game = {
   
     //
   
-    // player = game.add.sprite(300, 340, 'player');
-    // checkPointX = 300;
-    // checkPointY = 340;
-      player = game.add.sprite(2000, 1740, 'player');
+    player = game.add.sprite(300, 340, 'player');
+    checkPointX = 300;
+    checkPointY = 340;
+      // player = game.add.sprite(2000, 1740, 'player');
     checkPointX = 300;
     checkPointY = 340;
 
@@ -405,9 +405,9 @@ function checkIfCanJump() {
       // console.log('a',c.bodyA.id);
       // console.log('b',c.bodyB.id);
       if(c.bodyA.id >= 305 && c.bodyA.id <= 518){
-        // musicDeath.play();
-        // restart();
-        // return;
+        musicDeath.play();
+        restart();
+        return;
         // console.log('kil');
       }
       var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
