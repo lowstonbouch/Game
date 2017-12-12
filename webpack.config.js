@@ -9,7 +9,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'game.js',
-        publicPath: 'dist',
+        publicPath: 'src',
     },
     resolve: {
         extensions: ['.ts', '.js'],
