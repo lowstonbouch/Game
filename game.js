@@ -108065,127 +108065,127 @@ const images = {
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "b887c333d5ec8274b78d0851e7b3337b.png";
+module.exports = __webpack_require__.p + "logo.png";
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "0a9366737e6a25d893ce0f0fc587e1ea.png";
+module.exports = __webpack_require__.p + "platform1.png";
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "778db1ac8c7856499ecdaf90b0d8e4d0.png";
+module.exports = __webpack_require__.p + "grass_main.png";
 
 /***/ }),
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "cb9fd9689f1271effb3a3bb43f97df18.png";
+module.exports = __webpack_require__.p + "generic_deathtiles.png";
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "0df99f557a4815865bfe94aeed0085cc.png";
+module.exports = __webpack_require__.p + "player.png";
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "790a51d838b22fa135b56bd2e0bc3884.png";
+module.exports = __webpack_require__.p + "cursor.png";
 
 /***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "8cdf6f4d0ec243896bdff43bf8665df8.png";
+module.exports = __webpack_require__.p + "hook.png";
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "4c0b99b96541bfd1596ca88f7044706a.png";
+module.exports = __webpack_require__.p + "flagStart.png";
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "95e9d865e171688a0ab1ef0c3f1c2e94.png";
+module.exports = __webpack_require__.p + "flagEnd.png";
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "bf6888f771a8a0d271f6046f1377335a.png";
+module.exports = __webpack_require__.p + "bg_cloud1.png";
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "7ebf06f0986eaacfa205b87e2c030ff4.png";
+module.exports = __webpack_require__.p + "bg_cloud2.png";
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "d1cf42d1644fd5d5c2bef030e499735e.png";
+module.exports = __webpack_require__.p + "bg_cloud3.png";
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "b26f64c7bf1387d1f682841f42b4346c.png";
+module.exports = __webpack_require__.p + "backgroundMenu.png";
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "04152df5e415282cdeabc364010eb5f3.png";
+module.exports = __webpack_require__.p + "startGameButton.png";
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "9502d9951d21561f6d795549d5b57016.png";
+module.exports = __webpack_require__.p + "settingsButton.png";
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "02884eda49a6370e65ba13d553da415e.png";
+module.exports = __webpack_require__.p + "buttonA.png";
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "3162b583286c90e0bb6d55ceaef95d09.png";
+module.exports = __webpack_require__.p + "buttonD.png";
 
 /***/ }),
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "ed7567944ddd7357cf40c2d89302816e.png";
+module.exports = __webpack_require__.p + "buttonSpace.png";
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "89bac07d60836af13faf4ed96bf0dfc3.png";
+module.exports = __webpack_require__.p + "buttonMouse.png";
 
 /***/ }),
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "6dad5143415e1829df81fdbb2c52b39b.png";
+module.exports = __webpack_require__.p + "buttonEsc.png";
 
 /***/ }),
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "857b8fded955ae423c887de307e4cc22.png";
+module.exports = __webpack_require__.p + "backButton.png";
 
 /***/ }),
 /* 33 */
@@ -108223,49 +108223,49 @@ const audio = {
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "867c88360d0e1f0bd91c58920029116f.wav";
+module.exports = __webpack_require__.p + "music_menu.wav";
 
 /***/ }),
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "6fe16a8110802fb3cba22915093fa4de.wav";
+module.exports = __webpack_require__.p + "button_click.wav";
 
 /***/ }),
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "1d1c2279d94cb82836053bd29b0ce101.wav";
+module.exports = __webpack_require__.p + "music_jump.wav";
 
 /***/ }),
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "250d04ebed67f8605a01bedc3de21e3c.wav";
+module.exports = __webpack_require__.p + "hook_attach.wav";
 
 /***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "30becb54f206a29dbddbf8f26c388fb6.wav";
+module.exports = __webpack_require__.p + "hook_noattach.wav";
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "4f7a01061d482768f09edb402f629a4f.wav";
+module.exports = __webpack_require__.p + "death.wav";
 
 /***/ }),
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "0166b1eb57f47d8278978dd9f409d0c7.wav";
+module.exports = __webpack_require__.p + "foot.wav";
 
 /***/ }),
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "a00a7a856673d1a312c1fe795c525e7c.wav";
+module.exports = __webpack_require__.p + "land.wav";
 
 /***/ }),
 /* 43 */
