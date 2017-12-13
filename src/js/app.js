@@ -56,6 +56,10 @@ let musicLand;
 let musicFoot;
 
 
+let firstJump;
+let secondJump;
+
+
 let game = {
   preload: function(){
     const assetsLoader = new AssetsLoader(game);
@@ -212,22 +216,28 @@ let game = {
       player.frame = 0;
     }
   
-    if (jumpButton.isDown && !(checkIfCanJump()) && doublejump === true && game.time
+    if (jumpButton.isDown && !(checkIfCanJump()) && secondJump === true && game.time
       .now > firstJumpTimer) {
         musicJump.play();
       player.body.velocity.y = -250;
-      doublejump = false;
+      secondJump = false;
     }
   
     if (checkIfCanJump()) {
-      doublejump = true;
+      secondJump = false;
+    }
+
+    if(jumpButton.isUp && firstJump === true){
+      secondJump = true;
+      firstJump = false;
     }
   
     if (jumpButton.isDown && checkIfCanJump() && game.time.now > jumpTimer) {
       musicJump.play();
       player.body.velocity.y = -300;
       jumpTimer = game.time.now + 750;
-      firstJumpTimer = game.time.now + 200;
+      firstJumpTimer = game.time.now + 400;
+      firstJump = true;
     }
   
   
@@ -265,6 +275,7 @@ let game = {
     }
 
     if(backButton.isDown){
+      restart();
       this.state.start('Menu');
     }
   },
