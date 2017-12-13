@@ -107565,12 +107565,11 @@ process.umask = function() { return 0; };
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_phaser__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_AssetsLoader__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__main_js__ = __webpack_require__(0);
 
 
 
 
-
+// import game from './main.js';
 
 let map;
 let layer;
@@ -107624,6 +107623,11 @@ let musicLand;
 let musicFoot;
 
 
+let firstJump = false;
+let secondJump = false;
+let hookJump = false;
+
+
 let game = {
   preload: function(){
     const assetsLoader = new __WEBPACK_IMPORTED_MODULE_3__utils_AssetsLoader__["a" /* default */](game);
@@ -107653,17 +107657,18 @@ let game = {
     layerStone.resizeWorld();
   
   
-  
-  
     map.setCollisionByExclusion([], true, layer);
     map.setCollisionByExclusion([], true, layerConstick);
     map.setCollisionByExclusion([], true, layerStone);
+
+
+
   
     game.physics.p2.convertTilemap(map, layer);
     game.physics.p2.convertTilemap(map, layerConstick);
     game.physics.p2.convertTilemap(map, layerStone);
   
-    map.setTileIndexCallback(3,check,this);
+    
   
     // map.setCollisionBetween(1,400,layer);
     // map.setCollisionBetween(1059,1060,layer);
@@ -107675,19 +107680,19 @@ let game = {
     game.physics.p2.restitution = 0;
     game.physics.p2.gravity.y = 300;
   
-    playerCollisionGroup = game.physics.p2.createCollisionGroup();
-    consticCollisionGroup = game.physics.p2.createCollisionGroup();
+    // playerCollisionGroup = game.physics.p2.createCollisionGroup();
+    // consticCollisionGroup = game.physics.p2.createCollisionGroup();
   
-    game.physics.p2.updateBoundsCollisionGroup();
+    // game.physics.p2.updateBoundsCollisionGroup();
   
     //
   
     player = game.add.sprite(300, 340, 'player');
     checkPointX = 300;
     checkPointY = 340;
-      // player = game.add.sprite(2000, 1740, 'player');
-    checkPointX = 300;
-    checkPointY = 340;
+    //   player = game.add.sprite(2000, 1740, 'player');
+    // checkPointX = 2000;
+    // checkPointY = 1740;
 
     player.animations.add('left', [1, 2, 3, 4], 10, true);
     player.animations.add('jump', [0], 20, true);
@@ -107742,6 +107747,9 @@ let game = {
     musicDeath = this.add.audio('death');
     musicLand = this.add.audio('land');
   },
+  check: function(sprite,tile){
+console.log('her');
+  },
   update: function(){
     if(fireArrow){
       changeAngle();
@@ -107780,32 +107788,44 @@ let game = {
       player.frame = 0;
     }
   
-    if (jumpButton.isDown && !(checkIfCanJump()) && doublejump === true && game.time
-      .now > firstJumpTimer) {
+    if (jumpButton.isDown && !(checkIfCanJump()) && secondJump === true) {
         musicJump.play();
       player.body.velocity.y = -250;
-      doublejump = false;
+      secondJump = false;
     }
+
+    if (jumpButton.isDown && !(checkIfCanJump()) && firstJump === false && hookJump === false) {
+      musicJump.play();
+      player.body.velocity.y = -250;
+      hookJump = true;
+  }
   
     if (checkIfCanJump()) {
-      doublejump = true;
+      secondJump = false;
+      hookJump = false
+    }
+
+    if(jumpButton.isUp && firstJump === true){
+      secondJump = true;
+      firstJump = false;
     }
   
-    if (jumpButton.isDown && checkIfCanJump() && game.time.now > jumpTimer) {
+    if (jumpButton.isDown && checkIfCanJump() && game.time.now > jumpTimer && firstJump === false) {
       musicJump.play();
       player.body.velocity.y = -300;
       jumpTimer = game.time.now + 750;
       firstJumpTimer = game.time.now + 200;
+      firstJump = true;
     }
   
   
-    if(game.input.activePointer.isDown && hookTimer === true){
+    if(game.input.activePointer.leftButton.isDown && hookTimer === true){
       // click(player.x, player.y,  cursor.x,  cursor.y);
       // hookTimer = false;
       pushHook(player.x, player.y,  cursor.x,  cursor.y);
     }
   
-    if(game.input.activePointer.isUp && hookTimer === false){
+    if(game.input.activePointer.leftButton.isUp && hookTimer === false){
       hookTimer = true;
     }
   
@@ -107824,16 +107844,27 @@ let game = {
     }
 
     if(Math.abs(player.body.x - flagThirdEnd.x) <= 20 && Math.abs(player.body.y - flagThirdEnd.y) <= 50){
+    
       this.state.start('Win');
     }
   
     if(infoButton.isDown){
-      console.log(player.body.x);
-      console.log(player.body.y);
+      // console.log(player.body.x);
+      // console.log(player.body.y);
+      // console.log(player);
+      // console.log(game.physics.p2.world.bodies);
+      console.log(game.physics.p2);
+      console.log(player.body)
+      // game.state.start('Game',true,false);
     }
 
     if(backButton.isDown){
-      this.state.start('Menu');
+      release();
+      // restart(true,true);
+      
+      console.log(map);
+      game.state.start('Menu',true,true);
+      
     }
   },
   render: function(){
@@ -107972,7 +108003,7 @@ function checkIfCanJump() {
     if (c.bodyA === player.body.data || c.bodyB === player.body.data) {
       // console.log('a',c.bodyA.id);
       // console.log('b',c.bodyB.id);
-      if(c.bodyA.id >= 305 && c.bodyA.id <= 518){
+      if(c.bodyA.id >= player.body.data.id - 254 && c.bodyA.id <= player.body.data.id - 42){
         musicDeath.play();
         restart();
         return;
@@ -108005,13 +108036,17 @@ function checkIfCanHook(newRect){
     // console.log(c);
     //  console.log(game.physics.p2.world);
     if (c.bodyA === newRect.body.data || c.bodyB === newRect.body.data) {
+      // console.log(c);
       // console.log('a',c.bodyA.id);
       // console.log('b',c.bodyB.id);
-      if(c.bodyA.id >= 522 && c.bodyA.id <= 558){
+      // console.log( player.body.data.id);
+    
+      if( c.bodyA.id >= player.body.data.id - 40 && c.bodyA.id <= player.body.data.id - 1){
         hookNoAttach.play();
         return 3;
       }
-      
+
+    
         hookAttach.play();
         result = true;
         newRect.body.velocity.x = 0;
@@ -108317,7 +108352,7 @@ const Menu = {
     startGame: function() {
         clickMusic.play();
         menuMusic.stop();
-        this.state.start('Game');
+        this.state.start('Game',true,true);
     },
     settings: function() {
         clickMusic.play();
