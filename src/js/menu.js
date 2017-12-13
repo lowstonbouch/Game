@@ -41,7 +41,7 @@ const Menu = {
     startGame: function() {
         clickMusic.play();
         menuMusic.stop();
-        this.state.start('Game');
+        this.state.start('Game',true,true);
     },
     settings: function() {
         clickMusic.play();
