@@ -76,9 +76,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_phaser__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__menu_js__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__settings_js__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__win_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__menu_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__settings_js__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__win_js__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__css_style_css__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__css_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__css_style_css__);
+
+
 
 
 
@@ -104,8 +108,9 @@ game.state.start('Menu');
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__images__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__maps__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__audio__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__maps__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__audio__ = __webpack_require__(36);
+
 
 
 
@@ -135,6 +140,8 @@ class AssetsLoader{
         this.game.load.image('buttonMouse',__WEBPACK_IMPORTED_MODULE_0__images__["a" /* images */].buttonMouse);
         this.game.load.image('buttonEsc',__WEBPACK_IMPORTED_MODULE_0__images__["a" /* images */].buttonEsc);
         this.game.load.image('backButton',__WEBPACK_IMPORTED_MODULE_0__images__["a" /* images */].backButton);
+        this.game.load.image('buttonMusicOn', __WEBPACK_IMPORTED_MODULE_0__images__["a" /* images */].buttonMusicOn);
+        this.game.load.image('buttonMusicOff', __WEBPACK_IMPORTED_MODULE_0__images__["a" /* images */].buttonMusicOff);
 
         this.game.load.audio('music_menu', __WEBPACK_IMPORTED_MODULE_2__audio__["a" /* audio */].music_menu);
         this.game.load.audio('button_click', __WEBPACK_IMPORTED_MODULE_2__audio__["a" /* audio */].button_click);
@@ -107569,6 +107576,7 @@ process.umask = function() { return 0; };
 
 
 
+
 // import game from './main.js';
 
 let map;
@@ -107626,6 +107634,8 @@ let musicFoot;
 let firstJump = false;
 let secondJump = false;
 let hookJump = false;
+
+let anglePlayer;
 
 
 let game = {
@@ -107694,9 +107704,9 @@ let game = {
     // checkPointX = 2000;
     // checkPointY = 1740;
 
-    player.animations.add('left', [1, 2, 3, 4], 10, true);
+    player.animations.add('left', [2, 3, 4, 5], 10, true);
     player.animations.add('jump', [0], 20, true);
-    player.animations.add('right', [5, 6, 7, 8], 10, true);
+    player.animations.add('right', [6, 7, 8, 9], 10, true);
   
   
     //p2
@@ -107725,6 +107735,7 @@ let game = {
     right = game.input.keyboard.addKey(Phaser.Keyboard.D);
     infoButton = game.input.keyboard.addKey(Phaser.Keyboard.C);
     backButton = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+
   
     this.game.canvas.style.cursor = 'none';
     line = new Phaser.Line(player.x, player.y, cursor.body.x, cursor.body.y);
@@ -107747,17 +107758,13 @@ let game = {
     musicDeath = this.add.audio('death');
     musicLand = this.add.audio('land');
   },
-  check: function(sprite,tile){
-console.log('her');
-  },
   update: function(){
     if(fireArrow){
       changeAngle();
     }
 
-
-  
     if (left.isDown) {
+      anglePlayer = 0;
       player.body.moveLeft(230);
       // player.body.velocity.x = -150;
       if (facing != 'left') {
@@ -107765,6 +107772,7 @@ console.log('her');
         facing = 'left';
       }
     } else if (right.isDown) {
+      anglePlayer = 1;
       player.body.moveRight(230);
   
       if (facing != 'right') {
@@ -107776,16 +107784,22 @@ console.log('her');
       if (facing != 'idle') {
         player.animations.stop();
         if (facing == 'left') {
-          player.frame = 1;
+          player.frame = 2;
         } else {
-          player.frame = 5;
+          player.frame = 6;
         }
         facing = 'idle';
       }
     }
   
     if (!(checkIfCanJump()) && game.time.now < jumpTimer) {
-      player.frame = 0;
+      if(anglePlayer === 0){
+        player.frame = 0;
+      }
+      if(anglePlayer === 1){
+        player.frame = 1;
+      }
+     
     }
   
     if (jumpButton.isDown && !(checkIfCanJump()) && secondJump === true) {
@@ -107853,9 +107867,11 @@ console.log('her');
       // console.log(player.body.y);
       // console.log(player);
       // console.log(game.physics.p2.world.bodies);
-      console.log(game.physics.p2);
-      console.log(player.body)
+      // console.log(game.physics.p2);
+      // console.log(player.body)
       // game.state.start('Game',true,false);
+      console.log(game.camera.x);
+      console.log(game.camera.y);
     }
 
     if(backButton.isDown){
@@ -107888,6 +107904,16 @@ console.log('her');
       }
     } 
   },
+  musicOf: function(){
+    menuMusic.stop();
+    buttonMusicOn.kill();
+    buttonMusicOff = this.add.button(750 + game.camera.x,30 + game.camera.y, 'buttonMusicOff', this.musicOn, this);
+},
+musicOn: function(){
+    menuMusic.play();
+    buttonMusicOff.kill();
+    buttonMusicOn = this.add.button(750 + game.camera.x,30 + game.camera.y, 'buttonMusicOn', this.musicOf, this);
+},
 }
 
 
@@ -108092,6 +108118,8 @@ const images = {
     buttonMouse: __webpack_require__(30),
     buttonEsc: __webpack_require__(31),
     backButton: __webpack_require__(32),
+    buttonMusicOn: __webpack_require__(33),
+    buttonMucicOff: __webpack_require__(34),
 }
 
 
@@ -108224,6 +108252,18 @@ module.exports = __webpack_require__.p + "backButton.png";
 
 /***/ }),
 /* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "buttonMusicOn.png";
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "buttonMusicOff.png";
+
+/***/ }),
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -108235,75 +108275,75 @@ const levels = {
 
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return audio; });
 
 const audio = {
-    music_menu: __webpack_require__(35),
-    button_click: __webpack_require__(36),
-    music_jump: __webpack_require__(37),
-    hook_attach: __webpack_require__(38),
-    hook_noattach: __webpack_require__(39),
-    death: __webpack_require__(40),
-    foot: __webpack_require__(41),
-    land: __webpack_require__(42),
+    music_menu: __webpack_require__(37),
+    button_click: __webpack_require__(38),
+    music_jump: __webpack_require__(39),
+    hook_attach: __webpack_require__(40),
+    hook_noattach: __webpack_require__(41),
+    death: __webpack_require__(42),
+    foot: __webpack_require__(43),
+    land: __webpack_require__(44),
 }
 
 
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "music_menu.wav";
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "button_click.wav";
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "music_jump.wav";
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "hook_attach.wav";
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "hook_noattach.wav";
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "death.wav";
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "foot.wav";
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "land.wav";
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -108316,6 +108356,8 @@ module.exports = __webpack_require__.p + "land.wav";
 let load_complete = false;
 let menuMusic, musicOn = false;
 let clickMusic;
+let buttonMusicOn;
+let buttonMusicOff;
 const Menu = {
     preload: function(){
         this.load.onLoadStart.add(loadMenuStart, this);
@@ -108339,6 +108381,7 @@ const Menu = {
         if (load_complete) menu_text.visible = true;
         const startButton = this.add.button(400, 200, 'startGameButton', this.startGame, this);
         const settings = this.add.button(400, 350, 'settingsButton', this.settings, this);
+        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
         startButton.anchor.setTo(0.5, 0.5);
         settings.anchor.setTo(0.5, 0.5);
         // startButton.scale.setTo(0.2, 0.2);
@@ -108348,6 +108391,16 @@ const Menu = {
         menuMusic.play();
 
         clickMusic = this.add.audio('button_click');
+    },
+    musicOf: function(){
+        menuMusic.stop();
+        buttonMusicOn.kill();
+        buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
+    },
+    musicOn: function(){
+        menuMusic.play();
+        buttonMusicOff.kill();
+        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
     },
     startGame: function() {
         clickMusic.play();
@@ -108385,7 +108438,7 @@ function loadMenuComplete() {
 /* harmony default export */ __webpack_exports__["a"] = (Menu);
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -108395,7 +108448,8 @@ function loadMenuComplete() {
 
 
 let clickMusic, menuMusic, musicOn = false;
-
+let buttonMusicOn;
+let buttonMusicOff;
 const Settings = {
     preload: function(){
         const assetsLoader = new __WEBPACK_IMPORTED_MODULE_0__utils_AssetsLoader__["a" /* default */](Settings);
@@ -108419,12 +108473,23 @@ const Settings = {
         controller('buttonEsc', 'Menu', 700, 180);
 
         const back = this.add.button(400, 410, 'backButton', this.menu, this);
+        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
         back.anchor.setTo(0.5, 0.5);
         menuMusic = this.add.audio('music_menu');
         menuMusic.loop = true;
         menuMusic.play();
 
         clickMusic = this.add.audio('button_click');
+    },
+    musicOf: function(){
+        menuMusic.stop();
+        buttonMusicOn.kill();
+        buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
+    },
+    musicOn: function(){
+        menuMusic.play();
+        buttonMusicOff.kill();
+        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
     },
     menu: function() {
         clickMusic.play();
@@ -108451,7 +108516,7 @@ function controller(button, message, x, y) {
 /* harmony default export */ __webpack_exports__["a"] = (Settings);
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -108461,7 +108526,8 @@ function controller(button, message, x, y) {
 
 
 let  clickMusic, menuMusic, musicOn = false;
-
+let buttonMusicOn;
+let buttonMusicOff;
 const Win = {
     preload: function(){
         const assetsLoader = new __WEBPACK_IMPORTED_MODULE_0__utils_AssetsLoader__["a" /* default */](Win);
@@ -108480,12 +108546,23 @@ const Win = {
         controls.anchor.setTo(0.5, 0.5);
 
         const back = this.add.button(400, 210, 'backButton', this.menu, this);
+        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
         back.anchor.setTo(0.5, 0.5);
         menuMusic = this.add.audio('music_menu');
         menuMusic.loop = true;
         menuMusic.play();
 
         clickMusic = this.add.audio('button_click');
+    },
+    musicOf: function(){
+        menuMusic.stop();
+        buttonMusicOn.kill();
+        buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
+    },
+    musicOn: function(){
+        menuMusic.play();
+        buttonMusicOff.kill();
+        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
     },
     menu: function() {
         clickMusic.play();
@@ -108496,6 +108573,642 @@ const Win = {
 
 
 /* harmony default export */ __webpack_exports__["a"] = (Win);
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(49);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(58)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!./style.css", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!./style.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(50)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\r\n\r\nhtml{\r\n  background: linear-gradient(to top, #a9beec, #5b4ce4);\r\n}\r\n\r\nbody {\r\n  margin: 0 auto;\r\n}\r\n#renderCanvas {\r\n  width   : 100%;\r\n  height  : 100%;\r\n  touch-action: none;\r\n}\r\n.content{\r\n  width: 1200px;\r\n  margin: 0 auto;\r\n  padding: 0;\r\n}\r\n.field{\r\n  width: 800px;\r\n  margin: auto;\r\n  position: relative;\r\n  top: 30px;\r\n}\r\nheader{ \r\n  height: 30px;\r\n  width: 100%;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  position: fixed;\r\n  background-color: rgb(51, 0, 146);\r\n  z-index: 1000;\r\n}\r\n\r\nnav{\r\n  width: 200px;\r\n  display: flex;\r\n  justify-content: space-around;\r\n}\r\n\r\n.tutorial{\r\n  margin-top: 30px;\r\n  display: grid;\r\n}\r\n\r\n.more-info{\r\n  margin-top: 30px;\r\n}\r\n\r\n.title{\r\n  grid-row: 1/2;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n\r\n}\r\n\r\n.text-title{\r\n  font-family: monospace;\r\n  font-size: 30px;\r\n  font-weight: 800;\r\n  color: #d4d4d4;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n  \r\n}\r\n\r\n.info{\r\n  margin: 20px;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  position: relative;\r\n} \r\n\r\n.info-run{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(51) + ");\r\n  width: 250px;\r\n  height: 100px;\r\n}\r\n\r\n.info-jump{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(52) + ");\r\n  width: 250px;\r\n  height: 100px;\r\n}\r\n\r\n.info-hook{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(53) + ");\r\n  width: 67px;\r\n  height: 100px;\r\n}\r\n\r\n.tutorial-text{\r\n  width: 300px;\r\n  font-family: monospace;\r\n  font-weight: 600;\r\n  font-size: 18px;\r\n}\r\n\r\n.title-info{\r\n  position: absolute;\r\n  left: 3%;\r\n  top: 10%;\r\n  /* font-family: 'impact';\r\n  color: rgba(61, 57, 56, 0.702);\r\n  font-size: 30px; */\r\n  font-family: monospace;\r\n  font-size: 24px;\r\n  font-weight: 800;\r\n  color: #e0e0e0;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n}\r\n\r\n.nav-button{\r\n  font-family: monospace;\r\n  text-decoration: none;\r\n  color: rgba(238, 241, 255, 0.702);\r\n  font-size: 24px;\r\n  font-weight: 600;\r\n  margin: 0 30px;\r\n}\r\n\r\n.nav-button:hover{\r\n  color: rgb(255, 255, 255);\r\n}\r\n\r\n.image-run{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(54) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n}\r\n.image-jump{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(55) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n}\r\n\r\n.image-hook{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(56) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n  /* box-shadow: 0px 5px 18px 0px rgba(0, 0, 0, 0.35) */\r\n}\r\n\r\n.border{\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-top: 70px;\r\n}\r\n\r\n.hero{\r\n  width: 70px;\r\n  height: 60px;\r\n  background-position: 50%;\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(57) + ");\r\n  position: relative;\r\n}\r\n\r\n.hero::before {\r\n  content: \" \";\r\n  position: absolute;\r\n  border-top: 1px solid rgb(70, 70, 70);\r\n  opacity: 0.502;\r\n  width: 800%;\r\n  top: 50%;\r\n  right: 108%;\r\n}\r\n\r\n.hero::after {\r\n  content: \" \";\r\n  position: absolute;\r\n  border-top: 1px solid rgb(70, 70, 70);\r\n  opacity: 0.502;\r\n  width: 800%;\r\n  top: 50%;\r\n  left: 108%;\r\n}\r\n\r\n.more-text{\r\n  font-family: monospace;\r\n  font-size: 18px;\r\n}\r\n\r\n\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "info-run.png";
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "info-jump.png";
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "info-hook.png";
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "image-run.png";
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "image-jump.png";
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "image-hook.png";
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "ganster_tee.png";
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(selector) {
+		if (typeof memo[selector] === "undefined") {
+			var styleTarget = fn.call(this, selector);
+			// Special case to return head of iframe instead of iframe itself
+			if (styleTarget instanceof window.HTMLIFrameElement) {
+				try {
+					// This will throw an exception if access to iframe is blocked
+					// due to cross-origin restrictions
+					styleTarget = styleTarget.contentDocument.head;
+				} catch(e) {
+					styleTarget = null;
+				}
+			}
+			memo[selector] = styleTarget;
+		}
+		return memo[selector]
+	};
+})(function (target) {
+	return document.querySelector(target)
+});
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(59);
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton) options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+	if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
+		var nextSibling = getElement(options.insertInto + " " + options.insertAt.before);
+		target.insertBefore(style, nextSibling);
+	} else {
+		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	options.attrs.type = "text/css";
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	options.attrs.type = "text/css";
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = options.transform(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports) {
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
+
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
+  }
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
 
 /***/ })
 /******/ ]);

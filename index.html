@@ -5,17 +5,57 @@
   <title>Hook life</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href=".src/css/style.css">
 </head>
 
 <body>
   <header>
     <nav>
-      <span>vercion 0.0.1</span>
+      <span><a href = "#game" class = "nav-button">Game</a></span>
+      <span><a href = "#tutorial" class = "nav-button">Tutorial</a></span>
+      <span><a href = "#info" class = "nav-button">Info</a></span>
     </nav>
   </header>
+  <div id = "game" class = "content">
   <div id="root" class="field">
   </div>
+  <div class = "border">
+      <span class = "hero"></span>
+    </div>
+  <div id="tutorial" class = "tutorial">
+    <div class = "title">
+        <span class = "text-title">Tutorial</span>
+    </div>
+    <div class = "info">
+      <span class = "title-info">Run</span>
+      <span class = "tutorial-text">To move the character, you need to press the buttons on the keyboard A or D</span>
+      <span class = "info-run"></span>
+      <span class = "image-run"></span>
+    </div>
+    <div class = "info">
+      <span class = "title-info">Jump</span>
+        <span class = "tutorial-text">To jump a character, press the space bar</span>
+        <span class = "info-jump"></span>
+        <span class = "image-jump"></span>
+      </div>
+      <div class = "info">
+         <span class = "title-info">Hook</span>
+          <span class = "tutorial-text">To activate and start the hook, click on the left mouse button.</span>
+          <span class = "info-hook"></span>
+          <span class = "image-hook"></span>
+        </div>
+  </div>
+  <div class = "border">
+      <span class = "hero"></span>
+    </div>
+  <div id="info" class="more-info">
+      <div class = "title">
+          <span class = "text-title">About game</span>
+      </div>
+      <div class = "info">
+        <span class = "more-text">This is a copy of the popular game TeeWorlds. This game was created solely for the educational purpose for "The rolling scope school"</span>
+      </div>
+  </div>
+</div>
 <script type="text/javascript" src="game.js"></script></body>
 
 </html>
