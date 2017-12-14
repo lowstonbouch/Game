@@ -5,6 +5,8 @@ import game from './main.js';
 let load_complete = false;
 let menuMusic, musicOn = false;
 let clickMusic;
+let buttonMusicOn;
+let buttonMusicOff;
 const Menu = {
     preload: function(){
         this.load.onLoadStart.add(loadMenuStart, this);
@@ -28,6 +30,7 @@ const Menu = {
         if (load_complete) menu_text.visible = true;
         const startButton = this.add.button(400, 200, 'startGameButton', this.startGame, this);
         const settings = this.add.button(400, 350, 'settingsButton', this.settings, this);
+        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
         startButton.anchor.setTo(0.5, 0.5);
         settings.anchor.setTo(0.5, 0.5);
         // startButton.scale.setTo(0.2, 0.2);
@@ -37,6 +40,16 @@ const Menu = {
         menuMusic.play();
 
         clickMusic = this.add.audio('button_click');
+    },
+    musicOf: function(){
+        menuMusic.stop();
+        buttonMusicOn.kill();
+        buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
+    },
+    musicOn: function(){
+        menuMusic.play();
+        buttonMusicOff.kill();
+        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
     },
     startGame: function() {
         clickMusic.play();

@@ -6,6 +6,8 @@ import Menu from './menu.js';
 import Settings from './settings.js';
 import Win from './win.js';
 
+import * as css from '../css/style.css';
+
 let game;
 game = new Phaser.Game(800, 600, Phaser.CANVAS, 'root');
 game.state.add('Menu', Menu);

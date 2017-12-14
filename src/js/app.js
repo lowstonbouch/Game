@@ -1,6 +1,7 @@
 import 'p2';
 import 'pixi';
 import 'phaser';
+
 import AssetsLoader from '../utils/AssetsLoader';
 // import game from './main.js';
 
@@ -158,6 +159,7 @@ let game = {
     right = game.input.keyboard.addKey(Phaser.Keyboard.D);
     infoButton = game.input.keyboard.addKey(Phaser.Keyboard.C);
     backButton = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+
   
     this.game.canvas.style.cursor = 'none';
     line = new Phaser.Line(player.x, player.y, cursor.body.x, cursor.body.y);
@@ -180,16 +182,11 @@ let game = {
     musicDeath = this.add.audio('death');
     musicLand = this.add.audio('land');
   },
-  check: function(sprite,tile){
-console.log('her');
-  },
   update: function(){
     if(fireArrow){
       changeAngle();
     }
 
-
-  
     if (left.isDown) {
       player.body.moveLeft(230);
       // player.body.velocity.x = -150;
@@ -286,9 +283,11 @@ console.log('her');
       // console.log(player.body.y);
       // console.log(player);
       // console.log(game.physics.p2.world.bodies);
-      console.log(game.physics.p2);
-      console.log(player.body)
+      // console.log(game.physics.p2);
+      // console.log(player.body)
       // game.state.start('Game',true,false);
+      console.log(game.camera.x);
+      console.log(game.camera.y);
     }
 
     if(backButton.isDown){
@@ -321,6 +320,16 @@ console.log('her');
       }
     } 
   },
+  musicOf: function(){
+    menuMusic.stop();
+    buttonMusicOn.kill();
+    buttonMusicOff = this.add.button(750 + game.camera.x,30 + game.camera.y, 'buttonMusicOff', this.musicOn, this);
+},
+musicOn: function(){
+    menuMusic.play();
+    buttonMusicOff.kill();
+    buttonMusicOn = this.add.button(750 + game.camera.x,30 + game.camera.y, 'buttonMusicOn', this.musicOf, this);
+},
 }
 
 

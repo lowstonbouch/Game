@@ -1,0 +1,178 @@
+
+
+html{
+  background: linear-gradient(to top, #a9beec, #5b4ce4);
+}
+
+body {
+  margin: 0 auto;
+}
+#renderCanvas {
+  width   : 100%;
+  height  : 100%;
+  touch-action: none;
+}
+.content{
+  width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+}
+.field{
+  width: 800px;
+  margin: auto;
+  position: relative;
+  top: 30px;
+}
+header{ 
+  height: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgb(51, 0, 146);
+  z-index: 1000;
+}
+
+nav{
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tutorial{
+  margin-top: 30px;
+  display: grid;
+}
+
+.more-info{
+  margin-top: 30px;
+}
+
+.title{
+  grid-row: 1/2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.text-title{
+  font-family: monospace;
+  font-size: 30px;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);
+  
+}
+
+.info{
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+} 
+
+.info-run{
+  background-repeat: no-repeat;
+  background-image: url("../images/info-run.png");
+  width: 250px;
+  height: 100px;
+}
+
+.info-jump{
+  background-repeat: no-repeat;
+  background-image: url("../images/info-jump.png");
+  width: 250px;
+  height: 100px;
+}
+
+.info-hook{
+  background-repeat: no-repeat;
+  background-image: url("../images/info-hook.png");
+  width: 67px;
+  height: 100px;
+}
+
+.tutorial-text{
+  width: 300px;
+}
+
+.title-info{
+  position: absolute;
+  left: 5%;
+  top: 10%;
+  font-family: 'impact';
+  color: rgba(61, 57, 56, 0.702);
+  font-size: 30px;
+}
+
+.nav-button{
+  font-family: 'impact';
+  text-decoration: none;
+  color: rgba(238, 241, 255, 0.702);
+  font-size: 24px;
+}
+
+.nav-button:hover{
+  color: rgb(255, 255, 255);
+}
+
+.image-run{
+  background-repeat: no-repeat;
+  background-image: url("../images/image-run.png");
+  width: 350px;
+  height: 205px;
+}
+.image-jump{
+  background-repeat: no-repeat;
+  background-image: url("../images/image-jump.png");
+  width: 350px;
+  height: 205px;
+}
+
+.image-hook{
+  background-repeat: no-repeat;
+  background-image: url("../images/image-hook.png");
+  width: 350px;
+  height: 205px;
+}
+
+.border{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
+}
+
+.hero{
+  width: 70px;
+  height: 60px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-image: url("../images/ganster_tee.png");
+  position: relative;
+}
+
+.hero::before {
+  content: " ";
+  position: absolute;
+  border-top: 1px solid rgb(70, 70, 70);
+  opacity: 0.502;
+  width: 800%;
+  top: 50%;
+  right: 108%;
+}
+
+.hero::after {
+  content: " ";
+  position: absolute;
+  border-top: 1px solid rgb(70, 70, 70);
+  opacity: 0.502;
+  width: 800%;
+  top: 50%;
+  left: 108%;
+}
+
+

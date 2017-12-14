@@ -20,6 +20,8 @@ const images = {
     buttonMouse: require('./buttonMouse.png'),
     buttonEsc: require('./buttonEsc.png'),
     backButton: require('./backButton.png'),
+    buttonMusicOn: require('./buttonMusicOn.png'),
+    buttonMucicOff: require('./buttonMusicOff.png'),
 }
 
 export { images };
