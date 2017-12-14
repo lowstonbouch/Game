@@ -61,6 +61,8 @@ let firstJump = false;
 let secondJump = false;
 let hookJump = false;
 
+let anglePlayer;
+
 
 let game = {
   preload: function(){
@@ -128,9 +130,9 @@ let game = {
     // checkPointX = 2000;
     // checkPointY = 1740;
 
-    player.animations.add('left', [1, 2, 3, 4], 10, true);
+    player.animations.add('left', [2, 3, 4, 5], 10, true);
     player.animations.add('jump', [0], 20, true);
-    player.animations.add('right', [5, 6, 7, 8], 10, true);
+    player.animations.add('right', [6, 7, 8, 9], 10, true);
   
   
     //p2
@@ -188,6 +190,7 @@ let game = {
     }
 
     if (left.isDown) {
+      anglePlayer = 0;
       player.body.moveLeft(230);
       // player.body.velocity.x = -150;
       if (facing != 'left') {
@@ -195,6 +198,7 @@ let game = {
         facing = 'left';
       }
     } else if (right.isDown) {
+      anglePlayer = 1;
       player.body.moveRight(230);
   
       if (facing != 'right') {
@@ -206,16 +210,22 @@ let game = {
       if (facing != 'idle') {
         player.animations.stop();
         if (facing == 'left') {
-          player.frame = 1;
+          player.frame = 2;
         } else {
-          player.frame = 5;
+          player.frame = 6;
         }
         facing = 'idle';
       }
     }
   
     if (!(checkIfCanJump()) && game.time.now < jumpTimer) {
-      player.frame = 0;
+      if(anglePlayer === 0){
+        player.frame = 0;
+      }
+      if(anglePlayer === 1){
+        player.frame = 1;
+      }
+     
     }
   
     if (jumpButton.isDown && !(checkIfCanJump()) && secondJump === true) {
