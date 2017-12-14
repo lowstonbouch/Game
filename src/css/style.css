@@ -1,7 +1,7 @@
 
 
 html{
-  background: linear-gradient(to top, #a9beec, #5b4ce4);
+  background: linear-gradient(to top, #b5c4e6, #887dfa);
 }
 
 body {
@@ -30,7 +30,7 @@ header{
   justify-content: center;
   align-items: center;
   position: fixed;
-  background-color: rgb(51, 0, 146);
+  background-color: #887dfa;
   z-index: 1000;
 }
 
@@ -54,7 +54,7 @@ nav{
   display: flex;
   justify-content: center;
   align-items: center;
-
+  margin-bottom: 10px;
 }
 
 .text-title{
@@ -77,20 +77,23 @@ nav{
 .info-run{
   background-repeat: no-repeat;
   background-image: url("../images/info-run.png");
-  width: 250px;
+  background-size: 100%;
+  width: 165px;
   height: 100px;
 }
 
 .info-jump{
   background-repeat: no-repeat;
   background-image: url("../images/info-jump.png");
-  width: 250px;
+  background-size: 100%;
+  width: 165px;
   height: 100px;
 }
 
 .info-hook{
   background-repeat: no-repeat;
   background-image: url("../images/info-hook.png");
+  background-size: 100%;
   width: 67px;
   height: 100px;
 }
@@ -100,6 +103,7 @@ nav{
   font-family: monospace;
   font-weight: 600;
   font-size: 18px;
+  color: #1b1b1b;
 }
 
 .title-info{
@@ -119,14 +123,15 @@ nav{
 .nav-button{
   font-family: monospace;
   text-decoration: none;
-  color: rgba(238, 241, 255, 0.702);
+  color: rgba(10, 15, 37, 0.702);
   font-size: 24px;
   font-weight: 600;
   margin: 0 30px;
 }
 
+
 .nav-button:hover{
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
 }
 
 .image-run{
@@ -192,6 +197,32 @@ nav{
 .more-text{
   font-family: monospace;
   font-size: 18px;
+}
+
+.about-info{
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-left: 20px;
+}
+
+.title-info-about{
+  font-family: monospace;
+  font-size: 24px;
+  font-weight: 800;
+  color: #e0e0e0;
+  margin-left: 10px;
+  text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);
+}
+
+.github{
+  text-decoration: none;
+  color: rgb(48, 46, 46);
+}
+
+.github:hover{
+  color: rgba(0, 0, 0, 1);
 }
 
 
