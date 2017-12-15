@@ -51,7 +51,7 @@ module.exports = {
             { test: /p2\.js$/, loader: 'expose-loader?p2' },
             { test: /\.ts$/, loader: 'ts-loader', exclude: '/node_modules/' },
             { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-            { test: /\.(png|svg|jpg|gif|mp3|wav)$/, loader: 'file-loader?name=[name].[ext]' },
+            { test: /\.(png|svg|jpg|gif|mp3|wav|ico)$/, loader: 'file-loader?name=[name].[ext]' },
         ]
     },
     devtool: 'source-map'
