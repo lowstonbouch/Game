@@ -61,6 +61,7 @@ nav{
   font-family: monospace;
   font-size: 30px;
   font-weight: 800;
+  margin: 0;
   color: #d4d4d4;
   text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);
   
@@ -110,7 +111,7 @@ nav{
 .title-info{
   position: absolute;
   left: 3%;
-  top: 15%;
+  top: 0%;
   font-family: monospace;
   font-size: 30px;
   font-weight: 800;
@@ -195,6 +196,7 @@ nav{
 .more-text{
   font-family: monospace;
   font-size: 18px;
+  margin: 2px 5px;
 }
 
 .about-info{
@@ -210,7 +212,7 @@ nav{
   font-size: 24px;
   font-weight: 800;
   color: #e0e0e0;
-  margin-left: 10px;
+  margin-left: 15px;
   margin-bottom: 3px;
   text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);
 }
