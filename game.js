@@ -77,9 +77,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_phaser__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__menu_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__settings_js__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__win_js__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__css_style_css__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__settings_js__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__win_js__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__css_style_css__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__css_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__css_style_css__);
 
 
@@ -107,8 +107,8 @@ game.state.start('Menu');
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__images__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__maps__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__audio__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__maps__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__audio__ = __webpack_require__(38);
 
 
 
@@ -108162,6 +108162,7 @@ const images = {
     backButton: __webpack_require__(33),
     buttonMusicOn: __webpack_require__(34),
     buttonMucicOff: __webpack_require__(35),
+    favicon: __webpack_require__(36),
 }
 
 
@@ -108306,6 +108307,12 @@ module.exports = __webpack_require__.p + "buttonMusicOff.png";
 
 /***/ }),
 /* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "site-icon.ico";
+
+/***/ }),
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -108317,75 +108324,75 @@ const levels = {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return audio; });
 
 const audio = {
-    music_menu: __webpack_require__(38),
-    button_click: __webpack_require__(39),
-    music_jump: __webpack_require__(40),
-    hook_attach: __webpack_require__(41),
-    hook_noattach: __webpack_require__(42),
-    death: __webpack_require__(43),
-    foot: __webpack_require__(44),
-    land: __webpack_require__(45),
+    music_menu: __webpack_require__(39),
+    button_click: __webpack_require__(40),
+    music_jump: __webpack_require__(41),
+    hook_attach: __webpack_require__(42),
+    hook_noattach: __webpack_require__(43),
+    death: __webpack_require__(44),
+    foot: __webpack_require__(45),
+    land: __webpack_require__(46),
 }
 
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "music_menu.wav";
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "button_click.wav";
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "music_jump.wav";
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "hook_attach.wav";
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "hook_noattach.wav";
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "death.wav";
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "foot.wav";
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "land.wav";
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -108486,7 +108493,7 @@ function controller(button, message, x, y) {
 /* harmony default export */ __webpack_exports__["a"] = (Settings);
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -108566,13 +108573,13 @@ const Win = {
 /* harmony default export */ __webpack_exports__["a"] = (Win);
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(49);
+var content = __webpack_require__(50);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -108580,7 +108587,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(58)(content, options);
+var update = __webpack_require__(59)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -108597,21 +108604,21 @@ if(false) {
 }
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(50)(undefined);
+exports = module.exports = __webpack_require__(51)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\r\n\r\nhtml{\r\n  background: linear-gradient(to top, #b5c4e6, #887dfa);\r\n}\r\n\r\nbody {\r\n  margin: 0 auto;\r\n}\r\n#renderCanvas {\r\n  width   : 100%;\r\n  height  : 100%;\r\n  touch-action: none;\r\n}\r\n.content{\r\n  width: 1200px;\r\n  margin: 0 auto;\r\n  padding: 0;\r\n}\r\n.field{\r\n  width: 800px;\r\n  margin: auto;\r\n  position: relative;\r\n  top: 30px;\r\n}\r\nheader{ \r\n  height: 45px;\r\n  width: 100%;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  position: fixed;\r\n  background-color: #887dfa;\r\n  z-index: 1000;\r\n}\r\n\r\nnav{\r\n  width: 200px;\r\n  display: flex;\r\n  justify-content: space-around;\r\n}\r\n\r\n.tutorial{\r\n  margin-top: 30px;\r\n  display: grid;\r\n}\r\n\r\n.more-info{\r\n  margin-top: 30px;\r\n}\r\n\r\n.title{\r\n  grid-row: 1/2;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.text-title{\r\n  font-family: monospace;\r\n  font-size: 30px;\r\n  font-weight: 800;\r\n  margin: 0;\r\n  color: #d4d4d4;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n  \r\n}\r\n\r\n.info{\r\n  margin: 20px;\r\n  margin-left: 25px;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  position: relative;\r\n} \r\n\r\n.info-run{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(51) + ");\r\n  background-size: 100%;\r\n  width: 165px;\r\n  height: 100px;\r\n}\r\n\r\n.info-jump{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(52) + ");\r\n  background-size: 100%;\r\n  width: 165px;\r\n  height: 100px;\r\n}\r\n\r\n.info-hook{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(53) + ");\r\n  background-size: 100%;\r\n  width: 67px;\r\n  height: 100px;\r\n}\r\n\r\n.tutorial-text{\r\n  width: 300px;\r\n  font-family: monospace;\r\n  font-weight: 600;\r\n  font-size: 18px;\r\n  color: #1b1b1b;\r\n}\r\n\r\n.title-info{\r\n  position: absolute;\r\n  left: 3%;\r\n  top: 0%;\r\n  font-family: monospace;\r\n  font-size: 30px;\r\n  font-weight: 800;\r\n  color: #e0e0e0;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n}\r\n\r\n.nav-button{\r\n  font-family: monospace;\r\n  text-decoration: none;\r\n  color: rgba(10, 15, 37, 0.702);\r\n  font-size: 24px;\r\n  font-weight: 600;\r\n  margin: 0 30px;\r\n}\r\n\r\n\r\n.nav-button:hover{\r\n  color: rgb(0, 0, 0);\r\n}\r\n\r\n.image-run{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(54) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n}\r\n.image-jump{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(55) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n}\r\n\r\n.image-hook{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(56) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n  /* box-shadow: 0px 5px 18px 0px rgba(0, 0, 0, 0.35) */\r\n}\r\n\r\n.border{\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-top: 70px;\r\n}\r\n\r\n.hero{\r\n  width: 70px;\r\n  height: 60px;\r\n  background-position: 50%;\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(57) + ");\r\n  position: relative;\r\n}\r\n\r\n.hero::before {\r\n  content: \" \";\r\n  position: absolute;\r\n  border-top: 1px solid rgb(70, 70, 70);\r\n  opacity: 0.502;\r\n  width: 800%;\r\n  top: 50%;\r\n  right: 108%;\r\n}\r\n\r\n.hero::after {\r\n  content: \" \";\r\n  position: absolute;\r\n  border-top: 1px solid rgb(70, 70, 70);\r\n  opacity: 0.502;\r\n  width: 800%;\r\n  top: 50%;\r\n  left: 108%;\r\n}\r\n\r\n.more-text{\r\n  font-family: monospace;\r\n  font-size: 18px;\r\n  margin: 2px 5px;\r\n}\r\n\r\n.about-info{\r\n  margin-top: 15px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  position: relative;\r\n  margin-left: 20px;\r\n}\r\n\r\n.title-info-about{\r\n  font-family: monospace;\r\n  font-size: 24px;\r\n  font-weight: 800;\r\n  color: #e0e0e0;\r\n  margin-left: 15px;\r\n  margin-bottom: 3px;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n}\r\n\r\n.github{\r\n  text-decoration: none;\r\n  color: rgb(48, 46, 46);\r\n}\r\n\r\n.github:hover{\r\n  color: rgba(0, 0, 0, 1);\r\n}\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\r\n\r\nhtml{\r\n  background: linear-gradient(to top, #b5c4e6, #887dfa);\r\n}\r\n\r\nbody {\r\n  margin: 0 auto;\r\n}\r\n#renderCanvas {\r\n  width   : 100%;\r\n  height  : 100%;\r\n  touch-action: none;\r\n}\r\n.content{\r\n  width: 1200px;\r\n  margin: 0 auto;\r\n  padding: 0;\r\n}\r\n.field{\r\n  width: 800px;\r\n  margin: auto;\r\n  position: relative;\r\n  top: 30px;\r\n}\r\nheader{ \r\n  height: 45px;\r\n  width: 100%;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  position: fixed;\r\n  background-color: #887dfa;\r\n  z-index: 1000;\r\n}\r\n\r\nnav{\r\n  width: 200px;\r\n  display: flex;\r\n  justify-content: space-around;\r\n}\r\n\r\n.tutorial{\r\n  margin-top: 30px;\r\n  display: grid;\r\n}\r\n\r\n.more-info{\r\n  margin-top: 30px;\r\n}\r\n\r\n.title{\r\n  grid-row: 1/2;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.text-title{\r\n  font-family: monospace;\r\n  font-size: 30px;\r\n  font-weight: 800;\r\n  margin: 0;\r\n  color: #d4d4d4;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n  \r\n}\r\n\r\n.info{\r\n  margin: 20px;\r\n  margin-left: 25px;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  position: relative;\r\n} \r\n\r\n.info-run{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(52) + ");\r\n  background-size: 100%;\r\n  width: 165px;\r\n  height: 100px;\r\n}\r\n\r\n.info-jump{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(53) + ");\r\n  background-size: 100%;\r\n  width: 165px;\r\n  height: 100px;\r\n}\r\n\r\n.info-hook{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(54) + ");\r\n  background-size: 100%;\r\n  width: 67px;\r\n  height: 100px;\r\n}\r\n\r\n.tutorial-text{\r\n  width: 300px;\r\n  font-family: monospace;\r\n  font-weight: 600;\r\n  font-size: 18px;\r\n  color: #1b1b1b;\r\n}\r\n\r\n.title-info{\r\n  position: absolute;\r\n  left: 3%;\r\n  top: 0%;\r\n  font-family: monospace;\r\n  font-size: 30px;\r\n  font-weight: 800;\r\n  color: #e0e0e0;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n}\r\n\r\n.nav-button{\r\n  font-family: monospace;\r\n  text-decoration: none;\r\n  color: rgba(10, 15, 37, 0.702);\r\n  font-size: 24px;\r\n  font-weight: 600;\r\n  margin: 0 30px;\r\n}\r\n\r\n\r\n.nav-button:hover{\r\n  color: rgb(0, 0, 0);\r\n}\r\n\r\n.image-run{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(55) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n}\r\n.image-jump{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(56) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n}\r\n\r\n.image-hook{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(57) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n  /* box-shadow: 0px 5px 18px 0px rgba(0, 0, 0, 0.35) */\r\n}\r\n\r\n.border{\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-top: 70px;\r\n}\r\n\r\n.hero{\r\n  width: 70px;\r\n  height: 60px;\r\n  background-position: 50%;\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(58) + ");\r\n  position: relative;\r\n}\r\n\r\n.hero::before {\r\n  content: \" \";\r\n  position: absolute;\r\n  border-top: 1px solid rgb(70, 70, 70);\r\n  opacity: 0.502;\r\n  width: 800%;\r\n  top: 50%;\r\n  right: 108%;\r\n}\r\n\r\n.hero::after {\r\n  content: \" \";\r\n  position: absolute;\r\n  border-top: 1px solid rgb(70, 70, 70);\r\n  opacity: 0.502;\r\n  width: 800%;\r\n  top: 50%;\r\n  left: 108%;\r\n}\r\n\r\n.more-text{\r\n  font-family: monospace;\r\n  font-size: 18px;\r\n  margin: 2px 5px;\r\n}\r\n\r\n.about-info{\r\n  margin-top: 15px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  position: relative;\r\n  margin-left: 20px;\r\n}\r\n\r\n.title-info-about{\r\n  font-family: monospace;\r\n  font-size: 24px;\r\n  font-weight: 800;\r\n  color: #e0e0e0;\r\n  margin-left: 15px;\r\n  margin-bottom: 3px;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n}\r\n\r\n.github{\r\n  text-decoration: none;\r\n  color: rgb(48, 46, 46);\r\n}\r\n\r\n.github:hover{\r\n  color: rgba(0, 0, 0, 1);\r\n}\r\n\r\n\r\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports) {
 
 /*
@@ -108693,49 +108700,49 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "info-run.png";
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "info-jump.png";
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "info-hook.png";
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "image-run.png";
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "image-jump.png";
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "image-hook.png";
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "ganster_tee.png";
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -108791,7 +108798,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(59);
+var	fixUrls = __webpack_require__(60);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -109107,7 +109114,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports) {
 
 
