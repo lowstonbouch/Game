@@ -8,6 +8,9 @@
 - ```npm start``` start webpack dev server (build, watch and deploy server)
 - ```npm test``` to tests (not working yet)
 
+## Play:
+- https://lowstonbouch.github.io/Game/
+
 ## Create by: 
 - Nemirau Aliaksandr
 - lowstonbouch@gmail.com
