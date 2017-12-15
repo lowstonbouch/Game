@@ -22,6 +22,7 @@ const images = {
     backButton: require('./backButton.png'),
     buttonMusicOn: require('./buttonMusicOn.png'),
     buttonMucicOff: require('./buttonMusicOff.png'),
+    favicon: require('./site-icon.ico'),
 }
 
 export { images };
