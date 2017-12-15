@@ -14,7 +14,6 @@ game.state.add('Menu', Menu);
 game.state.add('Game', Game);
 game.state.add('Settings', Settings);
 game.state.add('Win', Win);
-// game.state.add('Intro', Intro);
 game.state.start('Menu');
 
 export default game;

@@ -69,14 +69,14 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_p2__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_p2__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_p2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_p2__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_pixi__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_pixi__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_pixi___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_pixi__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_phaser__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_js__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__menu_js__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__menu_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__settings_js__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__win_js__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__css_style_css__ = __webpack_require__(48);
@@ -97,7 +97,6 @@ game.state.add('Menu', __WEBPACK_IMPORTED_MODULE_4__menu_js__["a" /* default */]
 game.state.add('Game', __WEBPACK_IMPORTED_MODULE_3__app_js__["a" /* default */]);
 game.state.add('Settings', __WEBPACK_IMPORTED_MODULE_5__settings_js__["a" /* default */]);
 game.state.add('Win', __WEBPACK_IMPORTED_MODULE_6__win_js__["a" /* default */]);
-// game.state.add('Intro', Intro);
 game.state.start('Menu');
 
 /* harmony default export */ __webpack_exports__["default"] = (game);
@@ -107,9 +106,9 @@ game.state.start('Menu');
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__images__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__maps__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__audio__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__images__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__maps__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__audio__ = __webpack_require__(37);
 
 
 
@@ -185,27 +184,141 @@ module.exports = g;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["p2"] = __webpack_require__(6);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_AssetsLoader__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_js__ = __webpack_require__(0);
+
+
+
+
+let load_complete = false;
+let menuMusic, musicOn = false;
+let clickMusic;
+let buttonMusicOn;
+let buttonMusicOff;
+const Menu = {
+    preload: function(){
+        this.load.onLoadStart.add(loadMenuStart, this);
+        this.load.onFileComplete.add(fileMenuComplete, this);
+        this.load.onLoadComplete.add(loadMenuComplete, this);
+        const assetsLoader = new __WEBPACK_IMPORTED_MODULE_0__utils_AssetsLoader__["a" /* default */](Menu);
+        assetsLoader.getAssets();
+      },
+    create: function() {
+        const background = this.add.sprite(0, 0, 'backgroundMenu')
+        const style = {
+            font: "bold 55px Algerian",
+            fill: 'chocolate',
+            boundsAlignH: "center",
+            boundsAlignV: "middle"
+        };
+        const menu_text = this.add.text(400, 80, "HOOK LIFE", style);
+        menu_text.setShadow(1, 1, 'rgba(0,0,0,0.5)', 2);
+        menu_text.anchor.setTo(0.5, 0.5);
+        if (load_complete) menu_text.visible = true;
+        const startButton = this.add.button(400, 200, 'startGameButton', this.startGame, this);
+        const settings = this.add.button(400, 350, 'settingsButton', this.settings, this);
+       
+        startButton.anchor.setTo(0.5, 0.5);
+        settings.anchor.setTo(0.5, 0.5);
+
+        menuMusic = this.add.audio('music_menu');
+        menuMusic.loop = true;
+
+        if(Phaser.Sound.volume === 1){
+            menuMusic.play();
+            buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
+        }
+        else if (Phaser.Sound.volume === 0){
+            buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
+        }
+        else{
+            buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
+            Phaser.Sound.volume = 1;
+            menuMusic.play();
+        }
+       
+           
+
+        clickMusic = this.add.audio('button_click');
+    },
+    musicOf: function(){
+        Phaser.Sound.volume = 0;
+        menuMusic.volume = 0;
+        clickMusic.volume = 0;
+        Phaser.Sound.volume = 0;
+        buttonMusicOn.kill();
+        buttonMusicOn = null;
+        buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
+    },
+    musicOn: function(){
+        Phaser.Sound.volume = 1;
+        menuMusic.volume = 1;
+        clickMusic.volume = 1;
+        menuMusic.play();
+        buttonMusicOff.kill();
+        buttonMusicOff = null;
+        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
+    },
+    startGame: function() {
+        clickMusic.play();
+        menuMusic.stop();
+        this.state.start('Game',true,true);
+    },
+    settings: function() {
+        clickMusic.play();     
+        menuMusic.stop();
+        this.state.start('Settings',true,false,menuMusic.volume);
+    }
+};
+
+let text;
+let main_loading;
+
+function loadMenuStart() {
+    main_loading = this.add.text(400, 240, 'Loading...', {
+        font: "16px Press Start 2P",
+        fill: '#ffffff'
+    });
+    main_loading.anchor.setTo(0.5, 0.5);
+}
+
+function fileMenuComplete(progress, cacheKey, success, totalLoaded) {
+    main_loading.setText("Loading: " + progress + "%");
+}
+
+function loadMenuComplete() {
+    load_complete = true;
+    main_loading.kill();
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Menu);
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["PIXI"] = __webpack_require__(7);
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["p2"] = __webpack_require__(7);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Phaser"] = __webpack_require__(8);
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["PIXI"] = __webpack_require__(8);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {module.exports = global["Phaser"] = __webpack_require__(9);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var require;var require;/**
@@ -13848,7 +13961,7 @@ World.prototype.raycast = function(result, ray){
 });
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -21423,7 +21536,7 @@ PIXI.TextureUvs = function()
 }).call(this);
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -107368,10 +107481,10 @@ PIXI.canUseNewCanvasBlendModes = function () {
 * "What matters in this life is not what we do but what we do for others, the legacy we leave and the imprint we make." - Eric Meyer
 */
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -107561,15 +107674,15 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_p2__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_p2__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_p2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_p2__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_pixi__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_pixi__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_pixi___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_pixi__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_phaser__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_AssetsLoader__ = __webpack_require__(1);
 
@@ -107577,7 +107690,6 @@ process.umask = function() { return 0; };
 
 
 
-// import game from './main.js';
 
 let map;
 let layer;
@@ -107639,96 +107751,72 @@ let anglePlayer;
 
 
 let game = {
-  preload: function(){
+  preload: function () {
     const assetsLoader = new __WEBPACK_IMPORTED_MODULE_3__utils_AssetsLoader__["a" /* default */](game);
     assetsLoader.getAssets();
   },
-  create: function(){
+  create: function () {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.stage.backgroundColor = "#4488AA";
-  
+
     map = game.add.tilemap('level1');
-    map.addTilesetImage('generic_deathtiles','tiles2');
-    map.addTilesetImage('grass_main','tiles1');
-    map.addTilesetImage('bg_cloud1','bg_cloud1');
-    map.addTilesetImage('bg_cloud2','bg_cloud2');
-    map.addTilesetImage('bg_cloud3','bg_cloud3');
-  
+    map.addTilesetImage('generic_deathtiles', 'tiles2');
+    map.addTilesetImage('grass_main', 'tiles1');
+    map.addTilesetImage('bg_cloud1', 'bg_cloud1');
+    map.addTilesetImage('bg_cloud2', 'bg_cloud2');
+    map.addTilesetImage('bg_cloud3', 'bg_cloud3');
+
     layerBackground = map.createLayer('background');
     layerBackground.resizeWorld();
-  
+
     layer = map.createLayer('grass');
     layer.resizeWorld();
-  
+
     layerConstick = map.createLayer('constic');
     layerConstick.resizeWorld();
-  
+
     layerStone = map.createLayer('stone');
     layerStone.resizeWorld();
-  
-  
+
+
     map.setCollisionByExclusion([], true, layer);
     map.setCollisionByExclusion([], true, layerConstick);
     map.setCollisionByExclusion([], true, layerStone);
 
-
-
-  
     game.physics.p2.convertTilemap(map, layer);
     game.physics.p2.convertTilemap(map, layerConstick);
     game.physics.p2.convertTilemap(map, layerStone);
-  
-    
-  
-    // map.setCollisionBetween(1,400,layer);
-    // map.setCollisionBetween(1059,1060,layer);
-    
-    
-    // game.physics.p2.convertTilemap(map, layer);
-  
-  
+
     game.physics.p2.restitution = 0;
     game.physics.p2.gravity.y = 300;
-  
-    // playerCollisionGroup = game.physics.p2.createCollisionGroup();
-    // consticCollisionGroup = game.physics.p2.createCollisionGroup();
-  
-    // game.physics.p2.updateBoundsCollisionGroup();
-  
-    //
-  
+
     player = game.add.sprite(300, 340, 'player');
     checkPointX = 300;
     checkPointY = 340;
-    //   player = game.add.sprite(2000, 1740, 'player');
-    // checkPointX = 2000;
-    // checkPointY = 1740;
 
     player.animations.add('left', [2, 3, 4, 5], 10, true);
     player.animations.add('jump', [0], 20, true);
     player.animations.add('right', [6, 7, 8, 9], 10, true);
-  
-  
-    //p2
+
+
     game.physics.p2.enable(player);
-    // game.physics.arcade.enable(player);
-  
+
     player.body.fixedRotation = true;
     player.body.collideWorldBounds = true;
     game.camera.follow(player);
-  
+
     cursor = game.add.sprite(game.world.centerX, game.world.centerY, 'cursor');
-  
+
     cursors = game.input.keyboard.createCursorKeys();
-  
-   
-  
+
+
+
     game.physics.p2.enable(cursor);
-    // game.physics.arcade.enable(cursor);
-      
+
+
     cursor.body.collideWorldBounds = false;
     cursor.body.static = true;
-  
+
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.F);
     left = game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -107736,21 +107824,20 @@ let game = {
     infoButton = game.input.keyboard.addKey(Phaser.Keyboard.C);
     backButton = game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
-  
+
     this.game.canvas.style.cursor = 'none';
     line = new Phaser.Line(player.x, player.y, cursor.body.x, cursor.body.y);
-    
-    graphics = game.add.graphics(0,0);
+
+    graphics = game.add.graphics(0, 0);
     game.input.onUp.add(release, this);
     game.input.addMoveCallback(move, this);
-    // game.physics.p2.setPostBroadphaseCallback(checkCaustic, this);
-  
-    flagFirstStart = game.add.sprite(300,320,'flagStart');
-    flagFirstEnd = game.add.sprite(1300,1217,'flagEnd');
-    flagSecondStart = game.add.sprite(1120,1217,'flagStart');
-    flagSecondEnd = game.add.sprite(1730,1730,'flagEnd');
-    flagThirdStart = game.add.sprite(2000,1730,'flagStart');
-    flagThirdEnd = game.add.sprite(2925,2947,'flagEnd');
+
+    flagFirstStart = game.add.sprite(300, 320, 'flagStart');
+    flagFirstEnd = game.add.sprite(1300, 1217, 'flagEnd');
+    flagSecondStart = game.add.sprite(1120, 1217, 'flagStart');
+    flagSecondEnd = game.add.sprite(1730, 1730, 'flagEnd');
+    flagThirdStart = game.add.sprite(2000, 1730, 'flagStart');
+    flagThirdEnd = game.add.sprite(2925, 2947, 'flagEnd');
 
     musicJump = this.add.audio('music_jump');
     hookAttach = this.add.audio('hook_attach');
@@ -107758,15 +107845,14 @@ let game = {
     musicDeath = this.add.audio('death');
     musicLand = this.add.audio('land');
   },
-  update: function(){
-    if(fireArrow){
+  update: function () {
+    if (fireArrow) {
       changeAngle();
     }
 
     if (left.isDown) {
       anglePlayer = 0;
       player.body.moveLeft(230);
-      // player.body.velocity.x = -150;
       if (facing != 'left') {
         player.animations.play('left');
         facing = 'left';
@@ -107774,7 +107860,6 @@ let game = {
     } else if (right.isDown) {
       anglePlayer = 1;
       player.body.moveRight(230);
-  
       if (facing != 'right') {
         player.animations.play('right');
         facing = 'right';
@@ -107791,19 +107876,19 @@ let game = {
         facing = 'idle';
       }
     }
-  
+
     if (!(checkIfCanJump()) && game.time.now < jumpTimer) {
-      if(anglePlayer === 0){
+      if (anglePlayer === 0) {
         player.frame = 0;
       }
-      if(anglePlayer === 1){
+      if (anglePlayer === 1) {
         player.frame = 1;
       }
-     
+
     }
-  
+
     if (jumpButton.isDown && !(checkIfCanJump()) && secondJump === true) {
-        musicJump.play();
+      musicJump.play();
       player.body.velocity.y = -250;
       secondJump = false;
     }
@@ -107812,18 +107897,18 @@ let game = {
       musicJump.play();
       player.body.velocity.y = -250;
       hookJump = true;
-  }
-  
-    if (checkIfCanJump()) {
+    }
+
+    if ((secondJump === true || hookJump === true) && checkIfCanJump()) {
       secondJump = false;
       hookJump = false
     }
 
-    if(jumpButton.isUp && firstJump === true){
+    if (jumpButton.isUp && firstJump === true) {
       secondJump = true;
       firstJump = false;
     }
-  
+
     if (jumpButton.isDown && checkIfCanJump() && game.time.now > jumpTimer && firstJump === false) {
       musicJump.play();
       player.body.velocity.y = -300;
@@ -107831,180 +107916,151 @@ let game = {
       firstJumpTimer = game.time.now + 200;
       firstJump = true;
     }
-  
-  
-    if(game.input.activePointer.leftButton.isDown && hookTimer === true){
-      // click(player.x, player.y,  cursor.x,  cursor.y);
-      // hookTimer = false;
-      pushHook(player.x, player.y,  cursor.x,  cursor.y);
+
+
+    if (game.input.activePointer.leftButton.isDown && hookTimer === true) {
+      pushHook(player.x, player.y, cursor.x, cursor.y);
     }
-  
-    if(game.input.activePointer.leftButton.isUp && hookTimer === false){
+
+    if (game.input.activePointer.leftButton.isUp && hookTimer === false) {
       hookTimer = true;
     }
-  
-    if(Math.abs(player.body.x - flagFirstEnd.x) <= 20 && Math.abs(player.body.y - flagFirstEnd.y) <= 50){
+
+    if (Math.abs(player.body.x - flagFirstEnd.x) <= 20 && Math.abs(player.body.y - flagFirstEnd.y) <= 50) {
       checkPointX = 1120;
       checkPointY = 1215;
       player.body.x = checkPointX;
       player.body.y = checkPointY;
     }
-  
-    if(Math.abs(player.body.x - flagSecondEnd.x) <= 20 && Math.abs(player.body.y - flagSecondEnd.y) <= 50){
+
+    if (Math.abs(player.body.x - flagSecondEnd.x) <= 20 && Math.abs(player.body.y - flagSecondEnd.y) <= 50) {
       checkPointX = 2000;
       checkPointY = 1740;
       player.body.x = checkPointX;
       player.body.y = checkPointY;
     }
 
-    if(Math.abs(player.body.x - flagThirdEnd.x) <= 20 && Math.abs(player.body.y - flagThirdEnd.y) <= 50){
-    
+    if (Math.abs(player.body.x - flagThirdEnd.x) <= 20 && Math.abs(player.body.y - flagThirdEnd.y) <= 50) {
+
       this.state.start('Win');
     }
-  
-    if(infoButton.isDown){
-      // console.log(player.body.x);
-      // console.log(player.body.y);
-      // console.log(player);
-      // console.log(game.physics.p2.world.bodies);
-      // console.log(game.physics.p2);
-      // console.log(player.body)
-      // game.state.start('Game',true,false);
-      console.log(game.camera.x);
-      console.log(game.camera.y);
-    }
 
-    if(backButton.isDown){
+    if (backButton.isDown) {
       release();
-      // restart(true,true);
-      
-      console.log(map);
-      game.state.start('Menu',true,true);
-      
+      game.state.start('Menu', true, true);
+
     }
   },
-  render: function(){
-    if (drawLine)
-    {
-        graphics.kill();
+  render: function () {
+    if (drawLine) {
+      graphics.kill();
     }
   },
-  preRender: function(){
-    if(fireArrow){
-      if (line)
-      {
-          graphics = game.add.graphics(0,0);
-          if(graphics){
-            graphics.lineStyle(4, 0x3D3D3D);
-            graphics.moveTo(player.body.x - game.camera.x,player.body.y - game.camera.y);
-            graphics.lineTo(fireArrow.x - game.camera.x,fireArrow.y - game.camera.y);
-            graphics.endFill();
-          }
-         
+  preRender: function () {
+    if (fireArrow) {
+      if (line) {
+        graphics = game.add.graphics(0, 0);
+        if (graphics) {
+          graphics.lineStyle(4, 0x3D3D3D);
+          graphics.moveTo(player.body.x - game.camera.x, player.body.y - game.camera.y);
+          graphics.lineTo(fireArrow.x - game.camera.x, fireArrow.y - game.camera.y);
+          graphics.endFill();
+        }
+
       }
-    } 
+    }
   },
-  musicOf: function(){
+  musicOf: function () {
     menuMusic.stop();
     buttonMusicOn.kill();
-    buttonMusicOff = this.add.button(750 + game.camera.x,30 + game.camera.y, 'buttonMusicOff', this.musicOn, this);
-},
-musicOn: function(){
+    buttonMusicOff = this.add.button(750 + game.camera.x, 30 + game.camera.y, 'buttonMusicOff', this.musicOn, this);
+  },
+  musicOn: function () {
     menuMusic.play();
     buttonMusicOff.kill();
-    buttonMusicOn = this.add.button(750 + game.camera.x,30 + game.camera.y, 'buttonMusicOn', this.musicOf, this);
-},
+    buttonMusicOn = this.add.button(750 + game.camera.x, 30 + game.camera.y, 'buttonMusicOn', this.musicOf, this);
+  },
 }
 
+function pushHook(playerX, playerY, cursorX, cursorY) {
+  angle = 0;
+  let gip = 0;
+  let height = 8;
+  var width = 16;
 
 
-function check(sprite, tile){
-  console.log('here');
-}
+  gip = (Math.sqrt((playerX - cursorX) * (playerX - cursorX) + (playerY -
+    cursorY) * (playerY - cursorY)));
+  angle = ((cursorX - playerX)) / gip;
+  angle = Math.acos(angle);
+  angle = (angle * 180) / Math.PI;
 
-  
+  if (checkIfCanHook(fireArrow) === 3) {
+    release();
+    return;
+  }
 
-  function pushHook(playerX, playerY,  cursorX,  cursorY){
-    angle = 0; 
-    let gip = 0;
-    let height = 8; //height for the physics body - your image height is 8px
-    var width = 16;  
-  
-  
-    gip = (Math.sqrt((playerX - cursorX) * (playerX - cursorX) + (playerY -
-      cursorY) * (playerY - cursorY)));
-    angle = ((cursorX - playerX)) / gip;
-    angle = Math.acos(angle);
-    angle = (angle * 180) / Math.PI;
-  
-    if(checkIfCanHook(fireArrow) === 3){
+  if (cursorY < playerY) {
+    angle = -angle;
+  }
+  if (fireArrow) {
+    let hyp = 0;
+    hyp = (Math.sqrt((player.x - fireArrow.x) * (player.x - fireArrow.x) + (player.y -
+      fireArrow.y) * (player.y - fireArrow.y)));
+    if (hyp > 250) {
       release();
       return;
     }
-       
-    if (cursorY < playerY) {
-      angle = -angle;
+    if (checkIfCanHook(fireArrow)) {
+      createHook(fireArrow.x, fireArrow.y)
+    } else {
+      fireArrow.body.velocity.x = fireArrow.body.x - playerX + (30 * Math.cos((angle * Math.PI) / 180) * 32);
+      fireArrow.body.velocity.y = fireArrow.body.y - playerY + (30 * Math.sin((angle * Math.PI) / 180) * 32);
     }
-      if(fireArrow){
-        let hyp = 0;
-        hyp = (Math.sqrt((player.x - fireArrow.x) * (player.x - fireArrow.x) + (player.y -
-          fireArrow.y) * (player.y - fireArrow.y)));
-          if(hyp > 250){
-            release();
-            return;
-          }
-    if(checkIfCanHook(fireArrow)){
-      createHook(fireArrow.x,fireArrow.y)
-    }else{
-      fireArrow.body.velocity.x = fireArrow.body.x - playerX+ (30 * Math.cos((angle * Math.PI) / 180) * 32);
-      fireArrow.body.velocity.y = fireArrow.body.y -  playerY + (30* Math.sin((angle * Math.PI) / 180) * 32); 
-    }
-   }
-   else{
-     let x = playerX + (1 * Math.cos((angle * Math.PI) / 180) * 64);
-     let y = playerY + (1 * Math.sin((angle * Math.PI) / 180) * 64);
- 
+  }
+  else {
+    let x = playerX + (1 * Math.cos((angle * Math.PI) / 180) * 64);
+    let y = playerY + (1 * Math.sin((angle * Math.PI) / 180) * 64);
+
     fireArrow = game.add.sprite(x, y, 'hook', 1)
     game.physics.p2.enable(fireArrow);
     fireArrow.body.setRectangle(width, height);
-    // fireArrow.body.angle = angle;
     drawLine = true;
-    // fireArrow.body.static = true;
-   }
   }
+}
 
-  function createHook(cursorX,  cursorY){
-    mouseSpring = game.physics.p2.createSpring(fireArrow,player ,20,7,0);
-    hookTimer = false;
-  }
+function createHook(cursorX, cursorY) {
+  mouseSpring = game.physics.p2.createSpring(fireArrow, player, 20, 7, 0);
+  hookTimer = false;
+}
 
-  function changeAngle(){
-    angle = 0; 
-    let gip = 0;
-    gip = (Math.sqrt((player.x - fireArrow.x) * (player.x - fireArrow.x) + (player.y -
-      fireArrow.y) * (player.y - fireArrow.y)));
-    angle = ((fireArrow.x - player.x)) / gip;
-    angle = Math.acos(angle);
-    angle = (angle * 180) / Math.PI;
-  
-    if (fireArrow.y < player.y) {
-      angle = -angle;
-    }
-    fireArrow.body.angle = angle;
+function changeAngle() {
+  angle = 0;
+  let gip = 0;
+  gip = (Math.sqrt((player.x - fireArrow.x) * (player.x - fireArrow.x) + (player.y -
+    fireArrow.y) * (player.y - fireArrow.y)));
+  angle = ((fireArrow.x - player.x)) / gip;
+  angle = Math.acos(angle);
+  angle = (angle * 180) / Math.PI;
+
+  if (fireArrow.y < player.y) {
+    angle = -angle;
   }
+  fireArrow.body.angle = angle;
+}
 
 function release() {
 
-      if(fireArrow){
-        game.physics.p2.removeSpring(mouseSpring);
-        drawLine = false;
-        fireArrow.kill();
-        fireArrow = null;
-        hookTimer = false;
-      }
+  if (fireArrow) {
+    game.physics.p2.removeSpring(mouseSpring);
+    drawLine = false;
+    fireArrow.kill();
+    fireArrow = null;
+    hookTimer = false;
   }
-  
-  
+}
+
+
 
 
 function move(pointer, x, y, isDown) {
@@ -108013,7 +108069,7 @@ function move(pointer, x, y, isDown) {
 }
 
 
-function restart(){
+function restart() {
   release();
   player.body.x = checkPointX;
   player.body.y = checkPointY;
@@ -108027,13 +108083,10 @@ function checkIfCanJump() {
   for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++) {
     var c = game.physics.p2.world.narrowphase.contactEquations[i];
     if (c.bodyA === player.body.data || c.bodyB === player.body.data) {
-      // console.log('a',c.bodyA.id);
-      // console.log('b',c.bodyB.id);
-      if(c.bodyA.id >= player.body.data.id - 254 && c.bodyA.id <= player.body.data.id - 42){
+      if (c.bodyA.id >= player.body.data.id - 254 && c.bodyA.id <= player.body.data.id - 42) {
         musicDeath.play();
         restart();
         return;
-        // console.log('kil');
       }
       var d = p2.vec2.dot(c.normalA, yAxis); // Normal dot Y-axis
       if (c.bodyA === player.body.data) d *= -1;
@@ -108046,44 +108099,33 @@ function checkIfCanJump() {
 }
 
 
-function checkIfCanHook(newRect){
-  
+function checkIfCanHook(newRect) {
+
   var yAxis = p2.vec2.fromValues(0, 1);
   var result = false;
-  // if(hookTimer === false){
-  //   return;
-  // }
 
-  if(!(newRect)){
+  if (!(newRect)) {
     return;
   }
   for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++) {
     var c = game.physics.p2.world.narrowphase.contactEquations[i];
-    // console.log(c);
-    //  console.log(game.physics.p2.world);
     if (c.bodyA === newRect.body.data || c.bodyB === newRect.body.data) {
-      // console.log(c);
-      // console.log('a',c.bodyA.id);
-      // console.log('b',c.bodyB.id);
-      // console.log( player.body.data.id);
-    
-      if( c.bodyA.id >= player.body.data.id - 40 && c.bodyA.id <= player.body.data.id - 1){
+
+      if (c.bodyA.id >= player.body.data.id - 40 && c.bodyA.id <= player.body.data.id - 1) {
         hookNoAttach.play();
         return 3;
       }
-
-    
-        hookAttach.play();
-        result = true;
-        newRect.body.velocity.x = 0;
-        newRect.body.velocity.y = 0;
-        newRect.body.static = true;
-      }
-    if(newRect.body.data === player.body.data){
+      hookAttach.play();
+      result = true;
+      newRect.body.velocity.x = 0;
+      newRect.body.velocity.y = 0;
+      newRect.body.static = true;
+    }
+    if (newRect.body.data === player.body.data) {
       result = false;
     }
   }
-    return result;
+  return result;
 }
 
 
@@ -108091,179 +108133,179 @@ function checkIfCanHook(newRect){
 /* harmony default export */ __webpack_exports__["a"] = (game);
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return images; });
 const images = {
-    logo: __webpack_require__(12),
-    platform1: __webpack_require__(13),
-    grass_main: __webpack_require__(14),
-    generic_deathtiles: __webpack_require__(15),
-    player: __webpack_require__(16),
-    cursor: __webpack_require__(17),
-    hook: __webpack_require__(18),
-    flag_start: __webpack_require__(19),
-    flag_end: __webpack_require__(20),
-    bg_cloud1: __webpack_require__(21),
-    bg_cloud2: __webpack_require__(22),
-    bg_cloud3: __webpack_require__(23),
-    backgroundMenu: __webpack_require__(24),
-    startGameButton: __webpack_require__(25),
-    settingsButton: __webpack_require__(26),
-    buttonA: __webpack_require__(27),
-    buttonD: __webpack_require__(28),
-    buttonSpace: __webpack_require__(29),
-    buttonMouse: __webpack_require__(30),
-    buttonEsc: __webpack_require__(31),
-    backButton: __webpack_require__(32),
-    buttonMusicOn: __webpack_require__(33),
-    buttonMucicOff: __webpack_require__(34),
+    logo: __webpack_require__(13),
+    platform1: __webpack_require__(14),
+    grass_main: __webpack_require__(15),
+    generic_deathtiles: __webpack_require__(16),
+    player: __webpack_require__(17),
+    cursor: __webpack_require__(18),
+    hook: __webpack_require__(19),
+    flag_start: __webpack_require__(20),
+    flag_end: __webpack_require__(21),
+    bg_cloud1: __webpack_require__(22),
+    bg_cloud2: __webpack_require__(23),
+    bg_cloud3: __webpack_require__(24),
+    backgroundMenu: __webpack_require__(25),
+    startGameButton: __webpack_require__(26),
+    settingsButton: __webpack_require__(27),
+    buttonA: __webpack_require__(28),
+    buttonD: __webpack_require__(29),
+    buttonSpace: __webpack_require__(30),
+    buttonMouse: __webpack_require__(31),
+    buttonEsc: __webpack_require__(32),
+    backButton: __webpack_require__(33),
+    buttonMusicOn: __webpack_require__(34),
+    buttonMucicOff: __webpack_require__(35),
 }
 
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "logo.png";
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "platform1.png";
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "grass_main.png";
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "generic_deathtiles.png";
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "player.png";
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "cursor.png";
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "hook.png";
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "flagStart.png";
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "flagEnd.png";
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "bg_cloud1.png";
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "bg_cloud2.png";
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "bg_cloud3.png";
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "backgroundMenu.png";
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "startGameButton.png";
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "settingsButton.png";
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "buttonA.png";
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "buttonD.png";
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "buttonSpace.png";
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "buttonMouse.png";
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "buttonEsc.png";
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "backButton.png";
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "buttonMusicOn.png";
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "buttonMusicOff.png";
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -108275,167 +108317,72 @@ const levels = {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return audio; });
 
 const audio = {
-    music_menu: __webpack_require__(37),
-    button_click: __webpack_require__(38),
-    music_jump: __webpack_require__(39),
-    hook_attach: __webpack_require__(40),
-    hook_noattach: __webpack_require__(41),
-    death: __webpack_require__(42),
-    foot: __webpack_require__(43),
-    land: __webpack_require__(44),
+    music_menu: __webpack_require__(38),
+    button_click: __webpack_require__(39),
+    music_jump: __webpack_require__(40),
+    hook_attach: __webpack_require__(41),
+    hook_noattach: __webpack_require__(42),
+    death: __webpack_require__(43),
+    foot: __webpack_require__(44),
+    land: __webpack_require__(45),
 }
 
 
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "music_menu.wav";
 
 /***/ }),
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "button_click.wav";
+module.exports = __webpack_require__.p + "music_menu.wav";
 
 /***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "music_jump.wav";
+module.exports = __webpack_require__.p + "button_click.wav";
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "hook_attach.wav";
+module.exports = __webpack_require__.p + "music_jump.wav";
 
 /***/ }),
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "hook_noattach.wav";
+module.exports = __webpack_require__.p + "hook_attach.wav";
 
 /***/ }),
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "death.wav";
+module.exports = __webpack_require__.p + "hook_noattach.wav";
 
 /***/ }),
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "foot.wav";
+module.exports = __webpack_require__.p + "death.wav";
 
 /***/ }),
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "land.wav";
+module.exports = __webpack_require__.p + "foot.wav";
 
 /***/ }),
 /* 45 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_AssetsLoader__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_js__ = __webpack_require__(0);
-
-
-
-
-let load_complete = false;
-let menuMusic, musicOn = false;
-let clickMusic;
-let buttonMusicOn;
-let buttonMusicOff;
-const Menu = {
-    preload: function(){
-        this.load.onLoadStart.add(loadMenuStart, this);
-        this.load.onFileComplete.add(fileMenuComplete, this);
-        this.load.onLoadComplete.add(loadMenuComplete, this);
-        const assetsLoader = new __WEBPACK_IMPORTED_MODULE_0__utils_AssetsLoader__["a" /* default */](Menu);
-        assetsLoader.getAssets();
-      },
-    create: function() {
-        const background = this.add.sprite(0, 0, 'backgroundMenu')
-        const style = {
-            font: "bold 55px Algerian",
-            fill: 'chocolate',
-            boundsAlignH: "center",
-            boundsAlignV: "middle"
-        };
-        const menu_text = this.add.text(400, 80, "HOOK LIFE", style);
-        menu_text.setShadow(1, 1, 'rgba(0,0,0,0.5)', 2);
-        menu_text.anchor.setTo(0.5, 0.5);
-        // menu_text.visible = false;
-        if (load_complete) menu_text.visible = true;
-        const startButton = this.add.button(400, 200, 'startGameButton', this.startGame, this);
-        const settings = this.add.button(400, 350, 'settingsButton', this.settings, this);
-        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
-        startButton.anchor.setTo(0.5, 0.5);
-        settings.anchor.setTo(0.5, 0.5);
-        // startButton.scale.setTo(0.2, 0.2);
-        // settings.scale.setTo(0.2, 0.2);
-        menuMusic = this.add.audio('music_menu');
-        menuMusic.loop = true;
-        menuMusic.play();
-
-        clickMusic = this.add.audio('button_click');
-    },
-    musicOf: function(){
-        menuMusic.stop();
-        buttonMusicOn.kill();
-        buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
-    },
-    musicOn: function(){
-        menuMusic.play();
-        buttonMusicOff.kill();
-        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
-    },
-    startGame: function() {
-        clickMusic.play();
-        menuMusic.stop();
-        this.state.start('Game',true,true);
-    },
-    settings: function() {
-        clickMusic.play();
-        menuMusic.stop();
-        this.state.start('Settings');
-    }
-};
-
-let text;
-let main_loading;
-
-function loadMenuStart() {
-    main_loading = this.add.text(400, 240, 'Loading...', {
-        font: "16px Press Start 2P",
-        fill: '#ffffff'
-    });
-    main_loading.anchor.setTo(0.5, 0.5);
-}
-
-function fileMenuComplete(progress, cacheKey, success, totalLoaded) {
-    main_loading.setText("Loading: " + progress + "%");
-}
-
-function loadMenuComplete() {
-    load_complete = true;
-    main_loading.kill();
-    // this.state.start('Menu');
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Menu);
+module.exports = __webpack_require__.p + "land.wav";
 
 /***/ }),
 /* 46 */
@@ -108444,6 +108391,8 @@ function loadMenuComplete() {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_AssetsLoader__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__menu_js__ = __webpack_require__(3);
+
 
 
 
@@ -108472,31 +108421,52 @@ const Settings = {
         controller('buttonMouse', 'Hook', 550, 180);
         controller('buttonEsc', 'Menu', 700, 180);
 
-        const back = this.add.button(400, 410, 'backButton', this.menu, this);
-        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
+        const back = this.add.button(400, 410, 'backButton', this.menu, this); 
+        
+
         back.anchor.setTo(0.5, 0.5);
         menuMusic = this.add.audio('music_menu');
         menuMusic.loop = true;
-        menuMusic.play();
+
+        if(Phaser.Sound.volume === 1){
+            menuMusic.play();
+            buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
+        }
+        else if(Phaser.Sound.volume === 0){
+            buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
+            
+        }
+      
 
         clickMusic = this.add.audio('button_click');
     },
     musicOf: function(){
-        menuMusic.stop();
+        Phaser.Sound.volume = 0;
+        menuMusic.volume = 0;
+        clickMusic.volume = 0;
+        Phaser.Sound.volume = 0;
         buttonMusicOn.kill();
+        buttonMusicOn = null;
         buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
     },
     musicOn: function(){
+        Phaser.Sound.volume = 1;
+        menuMusic.volume = 1;
+        clickMusic.volume = 1;
         menuMusic.play();
         buttonMusicOff.kill();
+        buttonMusicOff = null;
         buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
     },
     menu: function() {
-        clickMusic.play();
+        if(buttonMusicOn){
+            clickMusic.play();
+        }
         menuMusic.stop();
-        this.state.start('Menu');
+        this.state.start('Menu',true,false,menuMusic.volume);
     }
 }
+
 
 function controller(button, message, x, y) {
     const style = {
@@ -108522,12 +108492,15 @@ function controller(button, message, x, y) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_AssetsLoader__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__menu_js__ = __webpack_require__(3);
+
 
 
 
 let  clickMusic, menuMusic, musicOn = false;
 let buttonMusicOn;
 let buttonMusicOff;
+
 const Win = {
     preload: function(){
         const assetsLoader = new __WEBPACK_IMPORTED_MODULE_0__utils_AssetsLoader__["a" /* default */](Win);
@@ -108546,26 +108519,44 @@ const Win = {
         controls.anchor.setTo(0.5, 0.5);
 
         const back = this.add.button(400, 210, 'backButton', this.menu, this);
-        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
+       
         back.anchor.setTo(0.5, 0.5);
         menuMusic = this.add.audio('music_menu');
         menuMusic.loop = true;
-        menuMusic.play();
+
+        if(Phaser.Sound.volume === 1){
+            menuMusic.play();
+            buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
+        }
+        else if(Phaser.Sound.volume === 0){
+            buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
+            
+        }
 
         clickMusic = this.add.audio('button_click');
     },
     musicOf: function(){
-        menuMusic.stop();
+        Phaser.Sound.volume = 0;
+        menuMusic.volume = 0;
+        clickMusic.volume = 0;
+        Phaser.Sound.volume = 0;
         buttonMusicOn.kill();
+        buttonMusicOn = null;
         buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
     },
     musicOn: function(){
+        Phaser.Sound.volume = 1;
+        menuMusic.volume = 1;
+        clickMusic.volume = 1;
         menuMusic.play();
         buttonMusicOff.kill();
+        buttonMusicOff = null;
         buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
     },
     menu: function() {
-        clickMusic.play();
+        if(buttonMusicOn){
+            clickMusic.play();
+        }
         menuMusic.stop();
         this.state.start('Menu');
     }
@@ -108614,7 +108605,7 @@ exports = module.exports = __webpack_require__(50)(undefined);
 
 
 // module
-exports.push([module.i, "\r\n\r\nhtml{\r\n  background: linear-gradient(to top, #b5c4e6, #887dfa);\r\n}\r\n\r\nbody {\r\n  margin: 0 auto;\r\n}\r\n#renderCanvas {\r\n  width   : 100%;\r\n  height  : 100%;\r\n  touch-action: none;\r\n}\r\n.content{\r\n  width: 1200px;\r\n  margin: 0 auto;\r\n  padding: 0;\r\n}\r\n.field{\r\n  width: 800px;\r\n  margin: auto;\r\n  position: relative;\r\n  top: 30px;\r\n}\r\nheader{ \r\n  height: 30px;\r\n  width: 100%;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  position: fixed;\r\n  background-color: #887dfa;\r\n  z-index: 1000;\r\n}\r\n\r\nnav{\r\n  width: 200px;\r\n  display: flex;\r\n  justify-content: space-around;\r\n}\r\n\r\n.tutorial{\r\n  margin-top: 30px;\r\n  display: grid;\r\n}\r\n\r\n.more-info{\r\n  margin-top: 30px;\r\n}\r\n\r\n.title{\r\n  grid-row: 1/2;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.text-title{\r\n  font-family: monospace;\r\n  font-size: 30px;\r\n  font-weight: 800;\r\n  color: #d4d4d4;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n  \r\n}\r\n\r\n.info{\r\n  margin: 20px;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  position: relative;\r\n} \r\n\r\n.info-run{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(51) + ");\r\n  background-size: 100%;\r\n  width: 165px;\r\n  height: 100px;\r\n}\r\n\r\n.info-jump{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(52) + ");\r\n  background-size: 100%;\r\n  width: 165px;\r\n  height: 100px;\r\n}\r\n\r\n.info-hook{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(53) + ");\r\n  background-size: 100%;\r\n  width: 67px;\r\n  height: 100px;\r\n}\r\n\r\n.tutorial-text{\r\n  width: 300px;\r\n  font-family: monospace;\r\n  font-weight: 600;\r\n  font-size: 18px;\r\n  color: #1b1b1b;\r\n}\r\n\r\n.title-info{\r\n  position: absolute;\r\n  left: 3%;\r\n  top: 15%;\r\n  font-family: monospace;\r\n  font-size: 24px;\r\n  font-weight: 800;\r\n  color: #e0e0e0;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n}\r\n\r\n.nav-button{\r\n  font-family: monospace;\r\n  text-decoration: none;\r\n  color: rgba(10, 15, 37, 0.702);\r\n  font-size: 24px;\r\n  font-weight: 600;\r\n  margin: 0 30px;\r\n}\r\n\r\n\r\n.nav-button:hover{\r\n  color: rgb(0, 0, 0);\r\n}\r\n\r\n.image-run{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(54) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n}\r\n.image-jump{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(55) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n}\r\n\r\n.image-hook{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(56) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n  /* box-shadow: 0px 5px 18px 0px rgba(0, 0, 0, 0.35) */\r\n}\r\n\r\n.border{\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-top: 70px;\r\n}\r\n\r\n.hero{\r\n  width: 70px;\r\n  height: 60px;\r\n  background-position: 50%;\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(57) + ");\r\n  position: relative;\r\n}\r\n\r\n.hero::before {\r\n  content: \" \";\r\n  position: absolute;\r\n  border-top: 1px solid rgb(70, 70, 70);\r\n  opacity: 0.502;\r\n  width: 800%;\r\n  top: 50%;\r\n  right: 108%;\r\n}\r\n\r\n.hero::after {\r\n  content: \" \";\r\n  position: absolute;\r\n  border-top: 1px solid rgb(70, 70, 70);\r\n  opacity: 0.502;\r\n  width: 800%;\r\n  top: 50%;\r\n  left: 108%;\r\n}\r\n\r\n.more-text{\r\n  font-family: monospace;\r\n  font-size: 18px;\r\n}\r\n\r\n.about-info{\r\n  margin-top: 15px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  position: relative;\r\n  margin-left: 20px;\r\n}\r\n\r\n.title-info-about{\r\n  font-family: monospace;\r\n  font-size: 24px;\r\n  font-weight: 800;\r\n  color: #e0e0e0;\r\n  margin-left: 10px;\r\n  margin-bottom: 3px;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n}\r\n\r\n.github{\r\n  text-decoration: none;\r\n  color: rgb(48, 46, 46);\r\n}\r\n\r\n.github:hover{\r\n  color: rgba(0, 0, 0, 1);\r\n}\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\r\n\r\nhtml{\r\n  background: linear-gradient(to top, #b5c4e6, #887dfa);\r\n}\r\n\r\nbody {\r\n  margin: 0 auto;\r\n}\r\n#renderCanvas {\r\n  width   : 100%;\r\n  height  : 100%;\r\n  touch-action: none;\r\n}\r\n.content{\r\n  width: 1200px;\r\n  margin: 0 auto;\r\n  padding: 0;\r\n}\r\n.field{\r\n  width: 800px;\r\n  margin: auto;\r\n  position: relative;\r\n  top: 30px;\r\n}\r\nheader{ \r\n  height: 30px;\r\n  width: 100%;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  position: fixed;\r\n  background-color: #887dfa;\r\n  z-index: 1000;\r\n}\r\n\r\nnav{\r\n  width: 200px;\r\n  display: flex;\r\n  justify-content: space-around;\r\n}\r\n\r\n.tutorial{\r\n  margin-top: 30px;\r\n  display: grid;\r\n}\r\n\r\n.more-info{\r\n  margin-top: 30px;\r\n}\r\n\r\n.title{\r\n  grid-row: 1/2;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.text-title{\r\n  font-family: monospace;\r\n  font-size: 30px;\r\n  font-weight: 800;\r\n  color: #d4d4d4;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n  \r\n}\r\n\r\n.info{\r\n  margin: 20px;\r\n  margin-left: 25px;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  position: relative;\r\n} \r\n\r\n.info-run{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(51) + ");\r\n  background-size: 100%;\r\n  width: 165px;\r\n  height: 100px;\r\n}\r\n\r\n.info-jump{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(52) + ");\r\n  background-size: 100%;\r\n  width: 165px;\r\n  height: 100px;\r\n}\r\n\r\n.info-hook{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(53) + ");\r\n  background-size: 100%;\r\n  width: 67px;\r\n  height: 100px;\r\n}\r\n\r\n.tutorial-text{\r\n  width: 300px;\r\n  font-family: monospace;\r\n  font-weight: 600;\r\n  font-size: 18px;\r\n  color: #1b1b1b;\r\n}\r\n\r\n.title-info{\r\n  position: absolute;\r\n  left: 3%;\r\n  top: 15%;\r\n  font-family: monospace;\r\n  font-size: 30px;\r\n  font-weight: 800;\r\n  color: #e0e0e0;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n}\r\n\r\n.nav-button{\r\n  font-family: monospace;\r\n  text-decoration: none;\r\n  color: rgba(10, 15, 37, 0.702);\r\n  font-size: 24px;\r\n  font-weight: 600;\r\n  margin: 0 30px;\r\n}\r\n\r\n\r\n.nav-button:hover{\r\n  color: rgb(0, 0, 0);\r\n}\r\n\r\n.image-run{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(54) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n}\r\n.image-jump{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(55) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n}\r\n\r\n.image-hook{\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(56) + ");\r\n  width: 350px;\r\n  height: 205px;\r\n  border: 5px ridge grey;\r\n  /* box-shadow: 0px 5px 18px 0px rgba(0, 0, 0, 0.35) */\r\n}\r\n\r\n.border{\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-top: 70px;\r\n}\r\n\r\n.hero{\r\n  width: 70px;\r\n  height: 60px;\r\n  background-position: 50%;\r\n  background-repeat: no-repeat;\r\n  background-image: url(" + __webpack_require__(57) + ");\r\n  position: relative;\r\n}\r\n\r\n.hero::before {\r\n  content: \" \";\r\n  position: absolute;\r\n  border-top: 1px solid rgb(70, 70, 70);\r\n  opacity: 0.502;\r\n  width: 800%;\r\n  top: 50%;\r\n  right: 108%;\r\n}\r\n\r\n.hero::after {\r\n  content: \" \";\r\n  position: absolute;\r\n  border-top: 1px solid rgb(70, 70, 70);\r\n  opacity: 0.502;\r\n  width: 800%;\r\n  top: 50%;\r\n  left: 108%;\r\n}\r\n\r\n.more-text{\r\n  font-family: monospace;\r\n  font-size: 18px;\r\n}\r\n\r\n.about-info{\r\n  margin-top: 15px;\r\n  display: flex;\r\n  flex-direction: column;\r\n  position: relative;\r\n  margin-left: 20px;\r\n}\r\n\r\n.title-info-about{\r\n  font-family: monospace;\r\n  font-size: 24px;\r\n  font-weight: 800;\r\n  color: #e0e0e0;\r\n  margin-left: 10px;\r\n  margin-bottom: 3px;\r\n  text-shadow: 0px 4px 3px rgba(0,0,0,0.2), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);\r\n}\r\n\r\n.github{\r\n  text-decoration: none;\r\n  color: rgb(48, 46, 46);\r\n}\r\n\r\n.github:hover{\r\n  color: rgba(0, 0, 0, 1);\r\n}\r\n\r\n\r\n", ""]);
 
 // exports
 

@@ -1,5 +1,6 @@
 import AssetsLoader from '../utils/AssetsLoader';
 import game from './main.js';
+import Menu from './menu.js';
 
 let clickMusic, menuMusic, musicOn = false;
 let buttonMusicOn;
@@ -26,31 +27,52 @@ const Settings = {
         controller('buttonMouse', 'Hook', 550, 180);
         controller('buttonEsc', 'Menu', 700, 180);
 
-        const back = this.add.button(400, 410, 'backButton', this.menu, this);
-        buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
+        const back = this.add.button(400, 410, 'backButton', this.menu, this); 
+        
+
         back.anchor.setTo(0.5, 0.5);
         menuMusic = this.add.audio('music_menu');
         menuMusic.loop = true;
-        menuMusic.play();
+
+        if(Phaser.Sound.volume === 1){
+            menuMusic.play();
+            buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
+        }
+        else if(Phaser.Sound.volume === 0){
+            buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
+            
+        }
+      
 
         clickMusic = this.add.audio('button_click');
     },
     musicOf: function(){
-        menuMusic.stop();
+        Phaser.Sound.volume = 0;
+        menuMusic.volume = 0;
+        clickMusic.volume = 0;
+        Phaser.Sound.volume = 0;
         buttonMusicOn.kill();
+        buttonMusicOn = null;
         buttonMusicOff = this.add.button(750,30, 'buttonMusicOff', this.musicOn, this);
     },
     musicOn: function(){
+        Phaser.Sound.volume = 1;
+        menuMusic.volume = 1;
+        clickMusic.volume = 1;
         menuMusic.play();
         buttonMusicOff.kill();
+        buttonMusicOff = null;
         buttonMusicOn = this.add.button(750,30, 'buttonMusicOn', this.musicOf, this);
     },
     menu: function() {
-        clickMusic.play();
+        if(buttonMusicOn){
+            clickMusic.play();
+        }
         menuMusic.stop();
-        this.state.start('Menu');
+        this.state.start('Menu',true,false,menuMusic.volume);
     }
 }
+
 
 function controller(button, message, x, y) {
     const style = {
