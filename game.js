@@ -107808,9 +107808,6 @@ let game = {
     cursor = game.add.sprite(game.world.centerX, game.world.centerY, 'cursor');
 
     cursors = game.input.keyboard.createCursorKeys();
-
-
-
     game.physics.p2.enable(cursor);
 
 
@@ -107987,8 +107984,6 @@ function pushHook(playerX, playerY, cursorX, cursorY) {
   let gip = 0;
   let height = 8;
   var width = 16;
-
-
   gip = (Math.sqrt((playerX - cursorX) * (playerX - cursorX) + (playerY -
     cursorY) * (playerY - cursorY)));
   angle = ((cursorX - playerX)) / gip;
@@ -108061,8 +108056,6 @@ function release() {
 }
 
 
-
-
 function move(pointer, x, y, isDown) {
   cursor.body.x = x + game.camera.x;
   cursor.body.y = y + game.camera.y;
@@ -108093,9 +108086,7 @@ function checkIfCanJump() {
       if (d > 0.5) result = true;
     }
   }
-
   return result;
-
 }
 
 
