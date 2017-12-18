@@ -80,16 +80,16 @@ let game = {
     map.addTilesetImage('bg_cloud3', 'bg_cloud3');
 
     layerBackground = map.createLayer('background');
-    layerBackground.resizeWorld();
+    // layerBackground.resizeWorld();
 
     layer = map.createLayer('grass');
     layer.resizeWorld();
 
     layerConstick = map.createLayer('constic');
-    layerConstick.resizeWorld();
+    // layerConstick.resizeWorld();
 
     layerStone = map.createLayer('stone');
-    layerStone.resizeWorld();
+    // layerStone.resizeWorld();
 
 
     map.setCollisionByExclusion([], true, layer);
@@ -121,9 +121,6 @@ let game = {
     cursor = game.add.sprite(game.world.centerX, game.world.centerY, 'cursor');
 
     cursors = game.input.keyboard.createCursorKeys();
-
-
-
     game.physics.p2.enable(cursor);
 
 
@@ -254,13 +251,12 @@ let game = {
     }
 
     if (Math.abs(player.body.x - flagThirdEnd.x) <= 20 && Math.abs(player.body.y - flagThirdEnd.y) <= 50) {
-
       this.state.start('Win');
     }
 
     if (backButton.isDown) {
-      release();
-      game.state.start('Menu', true, true);
+      // release();
+      game.state.start('Menu');
 
     }
   },
@@ -300,8 +296,6 @@ function pushHook(playerX, playerY, cursorX, cursorY) {
   let gip = 0;
   let height = 8;
   var width = 16;
-
-
   gip = (Math.sqrt((playerX - cursorX) * (playerX - cursorX) + (playerY -
     cursorY) * (playerY - cursorY)));
   angle = ((cursorX - playerX)) / gip;
@@ -374,8 +368,6 @@ function release() {
 }
 
 
-
-
 function move(pointer, x, y, isDown) {
   cursor.body.x = x + game.camera.x;
   cursor.body.y = y + game.camera.y;
@@ -406,9 +398,7 @@ function checkIfCanJump() {
       if (d > 0.5) result = true;
     }
   }
-
   return result;
-
 }
 
 
@@ -416,7 +406,6 @@ function checkIfCanHook(newRect) {
 
   var yAxis = p2.vec2.fromValues(0, 1);
   var result = false;
-
   if (!(newRect)) {
     return;
   }
