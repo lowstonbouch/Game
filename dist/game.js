@@ -107767,16 +107767,16 @@ let game = {
     map.addTilesetImage('bg_cloud3', 'bg_cloud3');
 
     layerBackground = map.createLayer('background');
-    layerBackground.resizeWorld();
+    // layerBackground.resizeWorld();
 
     layer = map.createLayer('grass');
     layer.resizeWorld();
 
     layerConstick = map.createLayer('constic');
-    layerConstick.resizeWorld();
+    // layerConstick.resizeWorld();
 
     layerStone = map.createLayer('stone');
-    layerStone.resizeWorld();
+    // layerStone.resizeWorld();
 
 
     map.setCollisionByExclusion([], true, layer);
@@ -107848,7 +107848,7 @@ let game = {
     }
 
     if (left.isDown) {
-      anglePlayer = 0;
+      // anglePlayer = 0;
       player.body.moveLeft(230);
       if (facing != 'left') {
         player.animations.play('left');
@@ -107938,13 +107938,12 @@ let game = {
     }
 
     if (Math.abs(player.body.x - flagThirdEnd.x) <= 20 && Math.abs(player.body.y - flagThirdEnd.y) <= 50) {
-
       this.state.start('Win');
     }
 
     if (backButton.isDown) {
-      release();
-      game.state.start('Menu', true, true);
+      // release();
+      game.state.start('Menu');
 
     }
   },
@@ -108094,7 +108093,6 @@ function checkIfCanHook(newRect) {
 
   var yAxis = p2.vec2.fromValues(0, 1);
   var result = false;
-
   if (!(newRect)) {
     return;
   }
