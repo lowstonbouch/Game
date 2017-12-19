@@ -161,7 +161,7 @@ let game = {
     }
 
     if (left.isDown) {
-      anglePlayer = 0;
+      // anglePlayer = 0;
       player.body.moveLeft(230);
       if (facing != 'left') {
         player.animations.play('left');
